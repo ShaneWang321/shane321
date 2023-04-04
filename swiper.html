@@ -1,104 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-  <link rel="stylesheet" href="./dist/css/swiper.min.css">
-  <link rel="stylesheet" href="./css/card.css">
-  <script>
-    // http://h5.eqxiu.com/s/n1uAMbHw
-    let x = 100 * (document.documentElement.clientWidth || document.body.clientWidth) / 750;
-    document.documentElement.style.fontSize = x + 'px';
-  </script>
-</head>
-
-<body>
-  <div class="swiper-container app">
-    <div class="swiper-wrapper content" id="content">
-      <div class="swiper-slide content_one">
-        <div class="left_box">
-          <div></div>
-        </div>
-        <div class="right_box">
-          <div class="right">
-            <div class="T_box">
-              <p>Bohe</p>
-              <p>Designer</p>
-            </div>
-          </div>
-        </div>
-        <img src="./img/call.png" alt="" class="call">
-        <div class="font-box">
-          <p>TEL：13812345678</p>
-          <p>FAX：010-12345678</p>
-          <div class="line-box">
-            <img class="" src="./img/youxiang.png" alt="">
-            <p>vip@eqxiu.com</p>
-          </div>
-          <img src="./img/zuobiao.png" alt="">
-          <p>Haidian District</p>
-          <p>City,Zhongguancun,Beijing</p>
-        </div>
-      </div>
-      <div class="swiper-slide content_two">
-        <div class="bai">
-          <img src="./img/dabaibian.gif" alt="">
-          <div class="dabai">
-            <img src="./img/dabai.gif" alt="">
-          </div>
-        </div>
-        <div class="case">
-          <p>CALL ME NOW</p>
-        </div>
-        <ul class="font_box">
-          <li>薄荷</li>
-          <li>设计师</li>
-          <li>PS、AI、ID、DW、AE</li>
-          <li>就职于</li>
-          <li>北京中网易企秀科技有限公司</li>
-          <li>11012010086</li>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>電子商務名片</title>
+    <style>
+      /* CSS樣式 */
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        width: 90%;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0px 0px 5px #ccc;
+      }
+      h1 {
+        font-size: 36px;
+        color: #333;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      h2 {
+        font-size: 24px;
+        color: #333;
+        margin-bottom: 10px;
+      }
+      p {
+        font-size: 16px;
+        line-height: 1.5;
+        color: #666;
+        margin-bottom: 10px;
+      }
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      li {
+        font-size: 16px;
+        line-height: 1.5;
+        color: #666;
+        margin-bottom: 5px;
+      }
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>電子商務名片</h1>
+      </header>
+      <section>
+        <h2>公司簡介</h2>
+        <p>我們是一家專門從事電子商務的公司，提供高品質的產品和優秀的服務。</p>
+      </section>
+      <section>
+        <h2>產品列表</h2>
+        <ul>
+          <li>商品1</li>
+          <li>商品2</li>
+          <li>商品3</li>
+          <li>商品4</li>
         </ul>
-      </div>
-      <div class="swiper-slide content_three">
-        <ul class="three">
-          <li class="typeface">
-            <img src="./img/ziti2.png" alt="">
-          </li>
-          <li class="namec">
-            <img src="./img/mingpian.png" alt="">
-            <img src="./img/bgquan.png" alt="">
-          </li>
-          <li class="zi">
-            <img src="./img/zi1.png" alt="">
-          </li>
-          <li class="artwork">
-            <img src="./img/yishu.png" alt="">
-          </li>
+      </section>
+      <section>
+        <h2>聯絡我們</h2>
+        <p>如果您對我們的產品或服務有任何問題，歡迎隨時聯繫我們。</p>
+        <ul>
+          <li>電話：123-456-7890</li>
+          <li>電子郵件：<a href="mailto:info@ecommerce.com">info@ecommerce.com</a></li>
+          <li>地址：123 Main Street, Anytown, USA</li>
         </ul>
-      </div>
-      <div class="swiper-slide content_four">
-        <ul class="four">
-          <li class="kapian">
-            <img src="./img/kuang.png" alt="">
-            <img src="./img/rentou.png" alt="">
-            <img src="./img/ganggang.png" alt="">
-          </li>
-          <li class="demonstration">
-            <img src="./img/yanshi.png" alt="">
-          </li>
-          <li class="jinggao">
-            <img src="./img/tututu.png" alt="">
-          </li>
-        </ul>
-      </div>
+      </section>
+      <footer>
+        <p>&copy; 2023 電子商務名片</p>
+      </footer>
     </div>
-  </div>
-  <script src="./js/zepto.js"></script>
-  <script src="./dist/js/swiper.min.js"></script>
-  <script src="./js/card.js"></script>
-</body>
-
+  </body>
 </html>
