@@ -13,48 +13,77 @@ body {
     color: #333;
 }
 
-/* Set styles for container */
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
+/* Set styles for background */
+body {
+    background-color: #000;
+    background-image: url('https://images.unsplash.com/photo-1517627041467-2abf965b22fa');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+/* Set styles for card container */
+.card {
+    width: 90%;
+    max-width: 600px;
+    margin: 0 auto 50px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 1px solid #ddd;
+    border-radius: 5px;
     padding: 20px;
+    text-align: center;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Set styles for heading */
-h1 {
-    font-size: 32px;
-    font-weight: 700;
+/* Set styles for card header */
+.card h1 {
+    font-size: 24px;
+    font-weight: 500;
     margin-bottom: 20px;
 }
 
-/* Set styles for paragraph */
-p {
-    font-size: 18px;
-    margin-bottom: 20px;
-}
-
-/* Set styles for unordered list */
-ul {
-    list-style: none;
-    margin-bottom: 20px;
-}
-
-/* Set styles for list items */
-li {
-    display: inline-block;
-    margin-right: 20px;
-}
-
-/* Set styles for links */
-a {
+/* Set styles for card links */
+.card a {
     display: block;
-    padding: 10px;
+    margin: 10px 0;
+    padding: 10px 0;
     text-decoration: none;
     color: #333;
-    border: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
     transition: all 0.3s ease-in-out;
 }
 
-a:hover {
+.card a:hover {
     background-color: #f2f2f2;
+}
+
+/* Set styles for copy button */
+#copy-btn {
+    display: block;
+    margin: 30px auto 0;
+    padding: 10px 20px;
+    border: none;
+    background-color: #333;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+#copy-btn:hover {
+    background-color: #222;
+}
+
+/* Media queries */
+@media screen and (max-width: 768px) {
+    .card {
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .card {
+        width: 90%;
+    }
 }
