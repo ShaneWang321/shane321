@@ -1,89 +1,86 @@
 /* Reset styles */
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 /* Set global font settings */
 body {
-    font-family: 'Roboto', sans-serif;
-    font-size: 16px;
-    line-height: 1.5;
-    color: #333;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333;
 }
 
-/* Set styles for background */
+/* Set styles for the colorful background */
 body {
-    background-color: #000;
-    background-image: url('https://images.unsplash.com/photo-1517627041467-2abf965b22fa');
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
+  background: linear-gradient(to bottom right, #ff0000, #00ff00, #0000ff);
+  background-attachment: fixed;
+  background-size: cover;
 }
 
-/* Set styles for card container */
+/* Set styles for the card container */
 .card {
-    width: 90%;
-    max-width: 600px;
-    margin: 0 auto 50px;
-    background-color: rgba(255, 255, 255, 0.9);
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 20px;
-    text-align: center;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 600px;
+  margin: 0 auto 50px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Set styles for card header */
+/* Set styles for the card header */
 .card h1 {
-    font-size: 24px;
-    font-weight: 500;
-    margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 20px;
 }
 
-/* Set styles for card links */
+/* Set styles for the card links */
 .card a {
-    display: block;
-    margin: 10px 0;
-    padding: 10px 0;
-    text-decoration: none;
-    color: #333;
-    border-bottom: 1px solid #ddd;
-    transition: all 0.3s ease-in-out;
+  display: block;
+  margin: 10px 0;
+  padding: 10px 0;
+  text-decoration: none;
+  color: #333;
+  border-bottom: 1px solid #ddd;
+  transition: all 0.3s ease-in-out;
 }
 
 .card a:hover {
-    background-color: #f2f2f2;
+  background-color: #f2f2f2;
 }
 
-/* Set styles for copy button */
+/* Set styles for the copy button */
 #copy-btn {
-    display: block;
-    margin: 30px auto 0;
-    padding: 10px 20px;
-    border: none;
-    background-color: #333;
-    color: #fff;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
+  display: block;
+  margin: 30px auto 0;
+  padding: 10px 20px;
+  border: none;
+  background-color: #333;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
 }
 
 #copy-btn:hover {
-    background-color: #222;
+  background-color: #222;
 }
 
 /* Media queries */
 @media screen and (max-width: 768px) {
-    .card {
-        width: 80%;
-    }
+  .card {
+    width: 80%;
+  }
 }
 
 @media screen and (max-width: 576px) {
-    .card {
-        width: 90%;
-    }
+  .card {
+    width: 90%;
+  }
 }
