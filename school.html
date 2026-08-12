@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>企業管理概論｜期中考互動複習 v3</title>
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--ink:#172033;--muted:#64748b;--accent:#2563eb;--accent2:#7c3aed;--good:#e8f7ef;--bad:#fff0f0;--line:#e5e7eb;--warn:#fff8df}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang TC","Noto Sans TC",sans-serif;background:var(--bg);color:var(--ink);line-height:1.65}
+header{padding:44px 20px 28px;background:linear-gradient(135deg,#111827,#1d4ed8);color:#fff}
+.wrap{max-width:980px;margin:auto}h1{font-size:34px;line-height:1.15;margin:8px 0}h2{margin-top:32px}h3{font-size:27px;margin:4px 0 16px}h4{font-size:19px;margin:22px 0 8px}
+.subtitle{opacity:.85;max-width:760px}.badge{display:inline-block;padding:5px 10px;border-radius:999px;background:#ffffff22;font-size:13px}
+main{padding:18px 14px 70px}section{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;margin:16px 0;box-shadow:0 8px 24px #0f172a0b}
+.exam{background:var(--warn);border-left:4px solid #eab308;padding:14px 15px;border-radius:10px;margin:14px 0}
+.note{font-size:14px;color:#6b7280;background:#f8fafc;border-radius:10px;padding:10px 12px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.card,.good,.bad{padding:14px;border-radius:12px;border:1px solid var(--line)}.good{background:var(--good)}.bad{background:var(--bad)}
+table{width:100%;border-collapse:collapse;margin:10px 0 18px;font-size:15px}th,td{border:1px solid var(--line);padding:10px;text-align:left;vertical-align:top}th{background:#f1f5f9}
+.chips{display:flex;flex-wrap:wrap;gap:8px}.chips span{padding:7px 10px;background:#eef2ff;border-radius:999px;font-size:14px}
+.timeline{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.timeline div{padding:12px;background:#f8fafc;border-radius:12px;border:1px solid var(--line)}
+nav{position:sticky;top:0;z-index:10;background:#ffffffef;backdrop-filter:blur(12px);border-bottom:1px solid var(--line);overflow:auto;white-space:nowrap;padding:9px 10px}
+nav a{display:inline-block;padding:7px 10px;text-decoration:none;color:#334155;border-radius:9px;font-size:14px}nav a:hover{background:#f1f5f9}
+.progress{height:8px;background:#e5e7eb;border-radius:999px;overflow:hidden;margin-top:15px}#bar{height:100%;width:0;background:#60a5fa}
+.quizbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}button{border:0;border-radius:10px;padding:10px 13px;font-weight:650;background:#e2e8f0;color:#0f172a}button.primary{background:var(--accent);color:#fff}button:active{transform:scale(.98)}
+.qcard{border:1px solid var(--line);border-radius:14px;padding:14px;margin:12px 0}.opt{display:block;width:100%;text-align:left;margin:7px 0;background:#f8fafc;border:1px solid var(--line)}.opt.correct{background:#dcfce7;border-color:#86efac}.opt.wrong{background:#fee2e2;border-color:#fca5a5}.answer{display:none;margin-top:8px;font-weight:700}.answer.show{display:block}
+.key{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:14px;word-spacing:7px;background:#0f172a;color:#e2e8f0;padding:14px;border-radius:12px;line-height:2}
+.small{font-size:13px;color:var(--muted)} details{border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:10px 0}summary{font-weight:700;cursor:pointer}
+@media(max-width:700px){h1{font-size:29px}section{padding:16px}.grid2,.timeline{grid-template-columns:1fr}table{font-size:13px}th,td{padding:8px}}
+
+.hero-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
+.hero-actions a{color:#fff;text-decoration:none;border:1px solid #ffffff55;padding:9px 12px;border-radius:10px;background:#ffffff12}
+.statgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0}
+.stat{padding:13px;border-radius:13px;background:#f8fafc;border:1px solid var(--line)}
+.stat b{font-size:23px;display:block}.stat small{color:var(--muted)}
+.mode-tabs{display:flex;gap:8px;overflow:auto;margin-bottom:12px}
+.mode-tabs button.active{background:#0f172a;color:white}
+.quiz-toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.qmeta{display:flex;gap:6px;flex-wrap:wrap;margin:7px 0}
+.tag{background:#eef2ff;color:#3730a3;border-radius:999px;padding:3px 8px;font-size:12px}
+.explain{display:none;background:#f8fafc;border-left:4px solid #94a3b8;padding:10px 12px;margin-top:10px;border-radius:8px}
+.explain.show{display:block}
+.review-btn{font-size:13px;padding:7px 9px;background:#fff;border:1px solid var(--line)}
+.podcast-shell{background:linear-gradient(145deg,#111827,#312e81);color:white;border-radius:18px;padding:18px}
+.podcast-shell button{background:#fff;color:#111827}
+.podcast-shell .secondary{background:#ffffff20;color:#fff;border:1px solid #ffffff33}
+.podcast-controls{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+.podcast-controls select{padding:10px;border-radius:10px;border:0;max-width:100%}
+.podcast-track{background:#ffffff12;padding:12px;border-radius:12px;margin:8px 0}
+.podcast-track.current{outline:2px solid #93c5fd}
+.sticky-score{position:sticky;bottom:10px;z-index:8;box-shadow:0 8px 30px #0f172a22}
+.wrongbox{background:#fff7ed;border:1px solid #fed7aa;padding:12px;border-radius:12px;margin:12px 0}
+.flashcard{min-height:220px;display:flex;align-items:center;justify-content:center;text-align:center;padding:25px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(160deg,#fff,#f8fafc);font-size:22px;cursor:pointer}
+.flashback{font-size:16px;text-align:left}
+@media(max-width:700px){.statgrid{grid-template-columns:1fr 1fr}.hero-actions{display:grid;grid-template-columns:1fr 1fr}.hero-actions a{text-align:center}}
+
+</style>
+</head>
+<body>
+<header><div class="wrap"><span class="badge">企業管理概論｜期中考・互動複習 v3</span><h1>從頭到尾完整複習網頁</h1>
+<p class="subtitle">依「學生版題庫」與「管理功能複習講義」整理。先讀四大管理功能，再補企業倫理、人資、行銷，最後用 70 題題庫與隨機 20 題模擬考驗收。</p><div class="hero-actions"><a href="#podcast">🎧 明早 Podcast</a><a href="#quiz">📝 模擬考</a><a href="#flash">🧠 快閃卡</a><a href="#cram">⚡ 5 分鐘衝刺</a></div>
+<div class="progress"><div id="bar"></div></div></div></header>
+
+<nav><div class="wrap">
+<a href="#exam">考試結構</a><a href="#planning">規劃</a><a href="#organization">組織</a><a href="#leadership">領導</a><a href="#control">控制</a><a href="#ethics">倫理</a><a href="#hr">人資</a><a href="#marketing">行銷</a><a href="#flash">快閃卡</a><a href="#quiz">題庫</a><a href="#podcast">Podcast</a>
+</div></nav>
+
+<main class="wrap">
+<section id="exam">
+<h3>先知道怎麼考</h3>
+<div class="grid2">
+<div class="card"><b>問答題 40%</b><p>共 4 題。管理功能中隨機抽 3 個主題各 1 題；企業環境／企業功能再抽 1 題。</p></div>
+<div class="card"><b>選擇題 60%</b><p>共 20 題，從題庫的管理功能、倫理社會責任、人資、行銷等內容隨機抽取，並可能加入課程相關中文題。</p></div>
+</div>
+<div class="exam"><b>最有效率的讀法：</b>先把「規劃、組織、領導、控制」的問答題背到能用自己的話完整說出；再用 70 題選擇題把細節補齊。</div>
+
+</section>
+
+<section id="cram">
+<h3>⚡ 明早 5 分鐘衝刺面板</h3>
+<div class="statgrid">
+  <div class="stat"><b>40%</b><small>問答題</small></div>
+  <div class="stat"><b>60%</b><small>選擇題</small></div>
+  <div class="stat"><b>4</b><small>大管理功能</small></div>
+  <div class="stat"><b>70</b><small>題庫題數</small></div>
+</div>
+<div class="grid2">
+<div class="card"><b>規劃</b><p>策略性 vs 戰術性、成長策略、標竿管理、SWOT、MBO/SMART。</p></div>
+<div class="card"><b>組織</b><p>矩陣雙重指揮鏈、機械式 vs 有機式、職權 vs 權力、控制幅度。</p></div>
+<div class="card"><b>領導</b><p>五種權力、費德勒、情境領導、路徑目標、賦權。</p></div>
+<div class="card"><b>控制</b><p>衡量→比較→行動；事前→即時→事後；四種績效資訊來源。</p></div>
+</div>
+<div class="exam"><b>考場口訣：</b>SW 內、OT 外｜矩陣＝雙主管｜Fiedler 不硬改風格｜SLT＝能力＋意願｜控制＝量、比、改｜事前先防、即時邊改、事後再改。</div>
+</section>
+
+<section id="planning">
+<h3>1. 規劃 Planning</h3>
+<p><b>核心定義：</b>定義組織目標、建立達成目標的整體策略，並發展全面性計畫，以整合與協調組織活動。</p>
+<div class="grid2">
+<div class="card"><h4>為什麼要規劃？</h4><ul>
+<li>提供管理者與非管理者方向</li><li>降低環境不確定性的風險</li><li>減少資源重疊與浪費</li><li>建立控制所需的績效指標</li></ul></div>
+<div class="card"><h4>Plans vs Goals</h4><p><b>計畫 Plans：</b>達成目標的一系列方案。</p><p><b>目標 Goals：</b>組織預期成果。</p></div>
+</div>
+<h4>策略性計畫 vs 戰術性計畫</h4>
+<table><tr><th></th><th>策略性</th><th>戰術性</th></tr>
+<tr><td>使用廣度</td><td>整體／廣泛</td><td>部門／局部</td></tr>
+<tr><td>時間幅度</td><td>長期</td><td>短期</td></tr>
+<tr><td>明確性</td><td>方向性</td><td>特定性</td></tr>
+<tr><td>使用頻率</td><td>常偏單一用途</td><td>常屬例行／常設計畫</td></tr></table>
+<div class="exam"><b>問答題答法：</b>策略性計畫由高階管理者主導，決定組織長期方向與整體資源配置；戰術性計畫由中、基層管理者將策略轉化為較短期、較具體的部門行動。兩者主要差異在範圍、期間、明確程度與管理層級。</div>
+
+<h4>MBO 與 SMART</h4>
+<p><b>MBO 目標管理四元素：</b>清楚的目標、參與式決策、明確期限、定期檢視成果／績效回饋。良好目標符合 SMART：Specific、Measurable、Attainable、Relevant、Time-bound。</p>
+
+<h4>策略管理與競爭</h4>
+<ul>
+<li><b>競爭優勢：</b>公司在相同策略行動上比競爭者表現更卓越；來源包括效率、品質、創新、顧客回應。</li>
+<li><b>策略層級：</b>總體策略 Corporate → 事業／競爭策略 Business → 功能策略 Functional。</li>
+<li><b>SWOT：</b>S、W 為內部；O、T 為外部。</li>
+<li><b>競爭策略：</b>差異化、成本領導、集中。</li>
+<li><b>總體策略：</b>成長、穩定、更新。</li>
+</ul>
+<h4>成長策略</h4>
+<p>教材列出四類：<b>集中、向前／向後垂直整合、水平整合、多角化</b>。可把它記成「集中－垂直－水平－多角化」。</p>
+<div class="exam"><b>問答題答法：</b>成長策略是企業為擴大營運規模、銷售、市場或事業範圍而採取的總體策略。依教材可分為集中、垂直整合、水平整合與多角化；垂直整合又可分向前與向後。</div>
+<h4>標竿管理 Benchmarking</h4>
+<p>以相關績效指標中<b>最佳對象</b>為依據，作為公司目標與行動的參考。目的在找出績效落差、學習最佳實務並改善流程與成果。</p>
+</section>
+<section id="organization">
+<h3>2. 組織 Organizing</h3>
+<p><b>核心定義：</b>將人與事充分安排、協調，進而達成組織目標。它要決定誰做什麼、資源怎麼分配、成員關係與權責如何劃分。</p>
+<h4>組織設計六大元素</h4>
+<div class="chips"><span>專業分工</span><span>部門化</span><span>權責劃分</span><span>控制幅度</span><span>集權／分權</span><span>正式化</span></div>
+<ul>
+<li><b>專業分工：</b>將工作拆為不同任務，由不同成員分段完成；可提升品質與效率、簡化技能並利於標準化。</li>
+<li><b>部門化：</b>可依功能、產品／事業部、顧客、地區等方式整合工作。</li>
+<li><b>指揮鏈：</b>由上到下的直線職權關係；指揮統一原則是一名員工原則上只對一位管理者負責。</li>
+<li><b>職權 Authority：</b>因管理職位而產生的權利。<b>職責 Responsibility：</b>因職位應承擔的責任。</li>
+<li><b>控制幅度：</b>管理者可有效指揮的員工數；工作越複雜、員工能力越不足，越不適合過大的控制幅度。</li>
+<li><b>正式化：</b>工作標準化及員工遵循規章程序的程度。</li>
+</ul>
+<h4>矩陣式組織 Matrix</h4>
+<p>同時存在功能與產品／專案兩條線，形成<b>雙重指揮鏈</b>。</p>
+<div class="grid2"><div class="good"><b>優點</b><br>平衡雙重壓力、連結相互依賴工作、共享專業資源。</div><div class="bad"><b>缺點</b><br>雙軸指揮容易衝突，員工可能無所適從。</div></div>
+<div class="exam"><b>問答題答法：</b>矩陣式組織同時依功能與產品／專案劃分，員工可能同時向功能主管與專案主管報告。優點是資源共享與跨部門協調佳；缺點是違反單一指揮原則，易出現權責與命令衝突。</div>
+
+<h4>機械式 vs 有機式</h4>
+<table><tr><th>機械式 Mechanistic</th><th>有機式 Organic</th></tr>
+<tr><td>高度專業化、正式化、集權</td><td>低正式化、分權、彈性高</td></tr>
+<tr><td>權責明確、指揮鏈清楚</td><td>跨部門合作、資訊橫向流動</td></tr>
+<tr><td>適合穩定環境、成本導向</td><td>適合不確定環境、創新導向</td></tr></table>
+<p class="note">「機械式／有機式」的完整對照並未直接出現在第二份講義文字頁；此處依題庫考點及講義中集權、正式化、扁平化與創新情境加以整理。</p>
+
+<h4>職權 vs 權力</h4>
+<p><b>職權</b>來自正式職位，是組織授予的合法權利；<b>權力</b>則是影響他人行為的能力，來源不一定是職位，也可能來自專業、獎賞、個人魅力等。</p>
+</section>
+<section id="leadership">
+<h3>3. 領導 Leadership</h3>
+<p><b>核心定義：</b>影響他人朝預期目標邁進的過程。</p>
+<h4>五種權力來源</h4>
+<table><tr><th>來源</th><th>重點</th></tr>
+<tr><td>法制權 Legitimate</td><td>因組織職位而具有</td></tr>
+<tr><td>強制權 Coercive</td><td>懲處或控制部屬</td></tr>
+<tr><td>獎賞權 Reward</td><td>給予獎金、升遷等正面獎賞</td></tr>
+<tr><td>專家權 Expert</td><td>來自專業、特殊技術或知識</td></tr>
+<tr><td>參照權 Referent</td><td>因個人特質或特殊資源使人敬佩</td></tr></table>
+
+<h4>三大領導研究路線</h4>
+<ul><li><b>特質論：</b>找出區別領導者與非領導者的特徵。</li>
+<li><b>行為論：</b>研究有效領導者「做了什麼」。Iowa：民主／專制／放任；Ohio：關懷／定規；Michigan：員工導向／生產導向；管理方格理想為 9,9。</li>
+<li><b>權變／情境論：</b>沒有任何一種領導方式在所有情況都最佳，必須讓領導風格與情境適配。</li></ul>
+
+<h4>費德勒權變模型 Fiedler</h4>
+<p>假設領導風格相對固定，因此若風格與情境不合，改善方式是<b>更換領導者或改變情境</b>。情境由三項構成：領導者—成員關係、任務結構、職權。極有利或極不利時，任務導向較有效；中間情境則關係導向較有效。</p>
+<h4>情境領導理論 SLT</h4>
+<p>依部屬的<b>能力＋意願</b>調整領導方式：低能力低意願→告知／指導；低能力高意願→推銷／教練；高能力低意願→參與；高能力高意願→授權／Delegating。</p>
+<h4>路徑—目標理論</h4>
+<p>領導者指出達成目標的路徑，依情境調整指導、支援、參與、成就導向四種行為。權變因素可分為：</p>
+<ul><li>任務：任務結構、正式職權系統、工作群體</li><li>部屬：內外控傾向、經驗、認知能力</li></ul>
+<div class="exam"><b>權變領導問答題：</b>權變領導認為領導效能取決於領導方式與情境是否配合。可列的因素包括領導者—成員關係、任務結構、職權、工作群體、部屬經驗、認知能力、內外控傾向等，考場至少寫四項。</div>
+
+<h4>當代領導</h4>
+<ul><li><b>交易型：</b>目標達成 ↔ 績效報酬。</li><li><b>轉換型：</b>賦權、賦能、賦情，促使成員超越個人利益。</li><li><b>魅力型：</b>展望、同理、授權。</li></ul>
+<h4>賦權 Empowerment</h4>
+<p>將決策權、責任與執行自主性下放給員工。領導者願意賦權，可能是因為員工更接近問題、能加快決策，也能提升投入感、能力與責任感。</p>
+</section>
+<section id="control">
+<h3>4. 控制 Controlling</h3>
+<p><b>核心定義：</b>一種衡量、比較與修正的管理程序，以確保組織目標達成。</p>
+<h4>控制程序三步驟</h4>
+<ol><li><b>衡量實際績效</b></li><li><b>比較實際績效與預設標準</b></li><li><b>採取管理行動</b></li></ol>
+<h4>四種衡量績效的資訊來源</h4>
+<table><tr><th>來源</th><th>特色</th></tr>
+<tr><td>個人觀察</td><td>第一手資料；直接，但可能主觀且費時</td></tr>
+<tr><td>統計報告</td><td>量化、客觀、便於分析，但容易忽略非量化因素</td></tr>
+<tr><td>口頭報告</td><td>快速、有互動，可取得具體反饋</td></tr>
+<tr><td>書面報告</td><td>最正式、最完整，易分類查找，但耗時</td></tr></table>
+<h4>依控制發生時間分類</h4>
+<div class="timeline">
+<div><b>事前 Feedforward</b><br>投入前預測問題、先採預防措施。</div>
+<div><b>即時 Concurrent</b><br>工作進行中同步監督並矯正。</div>
+<div><b>事後 Feedback</b><br>產出後，問題發生再修正。</div>
+</div>
+<div class="exam"><b>考場一句記法：</b>事前＝預防；即時＝邊做邊改；事後＝做完再改。</div>
+<h4>控制與衡量工具</h4>
+<ul><li><b>標竿管理：</b>參照最佳對象。</li><li><b>預算管理：</b>依目標分配資源與規劃營收成本。</li><li><b>資訊控制：</b>MRP、ERP。</li><li><b>流程管理：</b>TQM、Six Sigma、ISO 9000，重視顧客、流程、團隊合作與持續改善。</li></ul>
+<p class="note"><b>控制幅度</b>雖題庫放在「控制」問答區，但教材把它列為「組織設計」元素：指管理者可以有效指揮的員工數目。</p>
+</section>
+<section id="ethics">
+<h3>5. 企業倫理與社會責任</h3>
+<p class="note">第二份「管理功能」講義沒有這一單元的完整教學內容；以下依題庫所列考點整理，讓你能應付問答與選擇。</p>
+<h4>書面道德準則 Code of Ethics</h4>
+<p>目的在明確說明組織核心價值與可接受／不可接受行為，協助員工在灰色地帶做一致的倫理判斷，也讓管理者能據以教育、監督與執行。</p>
+<h4>利害關係人模型 Stakeholder Model</h4>
+<p>企業的社會責任不只對股東，而應兼顧所有會影響企業或受企業影響的群體，例如員工、顧客、供應商、債權人、社區、政府與環境。</p>
+<h4>內線交易 Insider Trading</h4>
+<p>利用尚未公開、具有重大價格影響的公司資訊買賣證券。投資人從事內線交易的誘因，是希望在市場其他人尚未取得資訊前獲得不公平的報酬或避免損失。</p>
+<h4>選擇題必背</h4>
+<ul><li>Hiring / firing / working conditions / privacy / respect → <b>對員工的倫理</b></li>
+<li>組織核心價值 → <b>written codes and policies</b></li>
+<li>直接受組織行為影響者 → <b>organizational stakeholders</b></li>
+<li>主動尋找改善社會福祉機會 → <b>proactive stance</b></li>
+<li>政府間接規範 → <b>tax incentives</b></li></ul>
+</section>
+<section id="hr">
+<h3>6. 人力資源管理 HRM</h3>
+<p class="note">本區主要依題庫考點整理；第二份講義未涵蓋 HRM 詳細內容。</p>
+<h4>工作分析、工作說明書、工作規範</h4>
+<ul><li><b>工作分析 Job Analysis：</b>系統蒐集某職位的任務、責任、工作條件與任職需求。</li>
+<li><b>工作說明書 Job Description：</b>描述「工作本身」要做什麼、有哪些職責。</li>
+<li><b>工作規範 Job Specification：</b>描述「做這份工作的人」需要什麼知識、技能、能力、教育與經驗。</li></ul>
+<h4>勞動短缺 vs 過剩</h4>
+<p><b>短缺：</b>招募正職、加班、臨時／約聘、外包、調職、提高留任。<br><b>過剩：</b>凍結招募、減少工時、自然減員、轉調、提前退休、裁員。</p>
+<h4>如何提高面試效度</h4>
+<ul><li>使用結構化面試與一致問題</li><li>問題直接對應工作分析</li><li>建立標準化評分尺度</li><li>訓練面試官，減少偏誤</li><li>可採多位面試官／多方法交叉驗證</li></ul>
+<h4>選擇題必背</h4>
+<ul><li>HRM 前三個活動偏向 <b>planning</b></li><li>最重要環境因素：<b>legal environment</b></li>
+<li>估算人力需求：看<b>產品需求</b></li><li>360-degree feedback：來自<b>所有與員工互動的人</b></li>
+<li>訓練成效最好看：<b>actual job performance</b></li></ul>
+</section>
+<section id="marketing">
+<h3>7. 行銷管理 Marketing</h3>
+<p class="note">本區主要依題庫考點整理；第二份管理功能講義未涵蓋完整行銷章節。</p>
+<h4>行銷外部環境</h4>
+<p>可從經濟、科技、社會文化、政治法律、競爭、人口結構與全球環境等面向分析；核心概念是行銷人員必須辨識<b>組織邊界以外</b>會影響行銷方案的因素。</p>
+<h4>常見定價策略</h4>
+<ul><li>成本導向定價</li><li>競爭導向定價</li><li>價值／需求導向定價</li><li>市場吸脂（高價進入）與滲透定價（低價快速擴張）</li><li>心理定價、折扣／促銷定價等戰術</li></ul>
+<h4>促銷兩大策略</h4>
+<p><b>Push 推式策略：</b>透過通路成員把產品往終端市場推。<br><b>Pull 拉式策略：</b>直接刺激最終消費者需求，讓消費者向通路要求產品。</p>
+<h4>選擇題必背</h4>
+<ul><li>產品帶來的功能與情感滿足 → <b>Benefits</b></li><li>客戶資訊連結 → <b>CRM</b></li>
+<li>一群密切相關、售給相同顧客群的產品 → <b>Product line</b></li>
+<li>自己通路據點 → <b>Direct distribution</b></li>
+<li>有限少數通路商 → <b>Exclusive distribution</b></li>
+<li>Distribution channel → 生產者到消費者之間的<b>相互依賴企業網絡</b></li></ul>
+</section>
+
+
+<section id="flash">
+<h3>🧠 快閃卡模式</h3>
+<p>點卡片翻面。建議明早 Podcast 聽完後，快速刷一輪。</p>
+<div id="flashcard" class="flashcard" onclick="flipCard()">點這裡開始快閃卡</div>
+<div class="quizbar" style="margin-top:12px">
+<button onclick="prevCard()">上一張</button><button class="primary" onclick="nextCard()">下一張</button><button onclick="shuffleCards()">重新洗牌</button>
+</div>
+<div id="flashcount" class="small"></div>
+</section>
+
+<section id="quiz">
+<h3>📝 中文題庫＋真正模擬考</h3>
+<p>題目與選項已全部中文化。現在有三種模式：練習模式會立即顯示答案與解析；模擬考模式會等你交卷才一次看結果；錯題模式只重做你答錯過的題目。</p>
+<div class="mode-tabs">
+<button id="practiceTab" class="active" onclick="setMode('practice')">練習模式</button>
+<button id="examTab" onclick="setMode('exam')">模擬考模式</button>
+<button id="wrongTab" onclick="startWrongMode()">只做錯題</button>
+</div>
+<div class="quiz-toolbar">
+<div class="quizbar">
+<button class="primary" onclick="renderQuiz(20)">隨機 20 題</button>
+<button onclick="renderQuiz(10)">快速 10 題</button>
+<button onclick="renderQuiz(70)">全部 70 題</button>
+</div>
+<button id="submitExam" style="display:none;background:#111827;color:white" onclick="submitExam()">交卷看成績</button>
+</div>
+<div id="wrongSummary" class="wrongbox">錯題會自動記在這支裝置上，下次開啟網頁仍可重做。</div>
+<div id="score" class="exam sticky-score">載入中…</div>
+<div id="quizbox"></div>
+<details><summary>展開 1–70 題答案速查</summary>
+<div class="key">1:A 2:C 3:A 4:B 5:C 6:D 7:B 8:D 9:A 10:C 11:C 12:D 13:A 14:A 15:B 16:A 17:A 18:D 19:B 20:A 21:B 22:D 23:C 24:D 25:B 26:A 27:B 28:D 29:A 30:A 31:C 32:A 33:A 34:D 35:B 36:A 37:B 38:B 39:D 40:B 41:A 42:B 43:D 44:D 45:E 46:D 47:D 48:E 49:D 50:B 51:B 52:D 53:A 54:A 55:C 56:C 57:B 58:D 59:D 60:C 61:C 62:A 63:B 64:E 65:A 66:B 67:A 68:A 69:D 70:B</div>
+</details>
+</section>
+
+
+<section id="podcast">
+<h3>🎧 明早 Podcast 模式</h3>
+<div class="podcast-shell">
+<h4 style="margin-top:0">企業管理概論｜約 20 分鐘濃縮複習</h4>
+<p>這不是預錄 MP3，而是直接呼叫 iPhone / iPad 的系統中文語音朗讀，因此中文聲音通常會比一般離線機器音自然。第一次播放請按「開始」。</p>
+<div class="podcast-controls">
+<button onclick="startPodcast()">▶︎ 開始／從頭播放</button>
+<button class="secondary" onclick="pausePodcast()">⏸ 暫停</button>
+<button class="secondary" onclick="resumePodcast()">⏵ 繼續</button>
+<button class="secondary" onclick="stopPodcast()">■ 停止</button>
+<select id="rateSel"><option value="0.85">0.85× 慢速</option><option value="1" selected>1.0× 正常</option><option value="1.12">1.12× 快速</option><option value="1.25">1.25× 衝刺</option></select>
+<select id="voiceSel"><option value="">自動選中文語音</option></select>
+</div>
+<div id="podcastStatus" class="small" style="color:#cbd5e1">尚未播放</div>
+<div id="podcastList"></div>
+</div>
+<p class="note">iOS 可能會在鎖定螢幕或切到其他 App 後暫停網頁語音；若你要一路鎖屏聽，之後可以再把這份腳本輸出成真正的音訊檔。</p>
+</section>
+
+<section>
+<h3>最後衝刺：10 個一定要能秒答的點</h3>
+<ol>
+<li>四大管理功能：規劃、組織、領導、控制。</li>
+<li>SWOT：S/W 內部，O/T 外部。</li>
+<li>總體策略三類：成長、穩定、更新。</li>
+<li>成長四方向：集中、垂直整合、水平整合、多角化。</li>
+<li>矩陣式組織＝雙重指揮鏈。</li>
+<li>五種權力：法制、強制、獎賞、專家、參照。</li>
+<li>Fiedler 風格固定，不合就換領導者或改情境。</li>
+<li>SLT readiness＝能力＋意願。</li>
+<li>控制三步：衡量 → 比較 → 管理行動。</li>
+<li>控制三型：事前 feedforward、即時 concurrent、事後 feedback。</li>
+</ol>
+</section>
+</main>
+
+<script>
+
+const questions = [{"n": 1, "q": "規劃所關注的是 ________。", "opts": {"A": "目標與手段兩者", "B": "只有目標", "C": "只有手段", "D": "目標與手段皆非"}, "answer": "A", "tag": "規劃", "explain": "規劃同時處理「要達成什麼」與「要怎麼達成」，也就是目標與手段。"}, {"n": 2, "q": "未進行正式規劃的組織，較可能出現下列哪一種情況？", "opts": {"A": "管理者貪腐", "B": "法律問題", "C": "多個部門重複執行相同工作", "D": "單一部門負責所有公司功能"}, "answer": "C", "tag": "規劃", "explain": "正式規劃可減少資源與工作的重疊；沒有正式規劃時，不同部門較可能重複做相同事情。"}, {"n": 3, "q": "正式規劃通常會帶來下列哪一項結果？", "opts": {"A": "較高的利潤", "B": "較低的生產力", "C": "銷售提高但利潤降低", "D": "不同管理階層間的緊張"}, "answer": "A", "tag": "規劃", "explain": "正式規劃通常與較佳的組織績效相關；題庫在此以較高利潤作為最佳答案。"}, {"n": 4, "q": "六步驟策略管理程序的第一步是 ________。", "opts": {"A": "分析組織的優勢與劣勢", "B": "確認組織的使命", "C": "確認可行策略", "D": "分析組織所擁有的機會"}, "answer": "B", "tag": "策略管理", "explain": "策略管理先釐清組織目前要做什麼、為何存在，因此先確認使命。"}, {"n": 5, "q": "外部分析是策略管理程序的第二步，它有助於辨識 ________。", "opts": {"A": "公司生產的產品", "B": "公司的長期目標", "C": "公司的機會與威脅", "D": "公司對員工的關心"}, "answer": "C", "tag": "SWOT", "explain": "外部分析用來找機會 Opportunities 與威脅 Threats。"}, {"n": 6, "q": "組織的資源主要用來辨識 ________。", "opts": {"A": "組織如何完成事情", "B": "組織在哪裡營運", "C": "組織何時營運", "D": "組織擁有什麼"}, "answer": "D", "tag": "SWOT", "explain": "資源是組織『擁有什麼』，屬於內部條件分析。"}, {"n": 7, "q": "SWOT 分析結合了 ________。", "opts": {"A": "公司的使命與目標", "B": "外部分析與內部分析", "C": "公司的理念與倫理", "D": "利潤與生產力"}, "answer": "B", "tag": "SWOT", "explain": "SWOT 同時結合內部 S/W 與外部 O/T。"}, {"n": 8, "q": "下列何者構成公司總體策略的三大類型？", "opts": {"A": "成長、垂直整合、水平整合", "B": "成長、緊縮、更新", "C": "更新、緊縮、多角化", "D": "成長、穩定、更新"}, "answer": "D", "tag": "公司總體策略", "explain": "講義列出三大總體策略：成長、穩定、更新。"}, {"n": 9, "q": "採取差異化策略的公司，會著重使其產品或服務 ________。", "opts": {"A": "獨特且與眾不同", "B": "與競爭者相似", "C": "讓人熟悉", "D": "價格實惠"}, "answer": "A", "tag": "競爭策略", "explain": "差異化的核心就是提供獨特、與競爭者不同的產品或服務。"}, {"n": 10, "q": "目標管理（MBO）之所以通常能成功，主要是因為它 ________。", "opts": {"A": "讓管理者對目標產生所有權感", "B": "免除管理者設定目標的責任", "C": "讓員工對目標產生所有權感", "D": "目標未達成時免除員工責任"}, "answer": "C", "tag": "MBO", "explain": "MBO 強調參與式目標設定，讓員工對目標更有投入感與所有權感。"}, {"n": 11, "q": "某肥皂公司設有沐浴皂部門、洗衣清潔劑部門與洗碗精部門，這是採用哪一種部門化？", "opts": {"A": "流程部門化", "B": "功能部門化", "C": "產品部門化", "D": "顧客部門化"}, "answer": "C", "tag": "部門化", "explain": "依不同產品類別設立部門，屬於產品別／事業部式部門化。"}, {"n": 12, "q": "由高階管理層一路延伸至組織最低階層的職權線，稱為 ________。", "opts": {"A": "責任鏈", "B": "指揮統一", "C": "幕僚職權", "D": "指揮鏈"}, "answer": "D", "tag": "指揮鏈", "explain": "從高階到低階的正式職權線就是 chain of command。"}, {"n": 13, "q": "________ 是履行某項職務的義務或期待。", "opts": {"A": "職責（Responsibility）", "B": "指揮統一", "C": "指揮鏈", "D": "控制幅度"}, "answer": "A", "tag": "權責劃分", "explain": "Responsibility 指個人因職位而應承擔、履行的責任。"}, {"n": 14, "q": "工地主管看到雷雨將至，立即要求工人回家，這是在展現 ________。", "opts": {"A": "直線職權", "B": "幕僚授權", "C": "暫時性責任", "D": "指揮統一"}, "answer": "A", "tag": "職權", "explain": "主管依職位直接指揮所屬員工，是直線職權的運用。"}, {"n": 15, "q": "________ 是建立在領導者懲罰或控制能力上的權力。", "opts": {"A": "獎賞權", "B": "強制權", "C": "專家權", "D": "參照權"}, "answer": "B", "tag": "權力來源", "explain": "能懲處或控制部屬的是強制權 Coercive Power。"}, {"n": 16, "q": "銀行經理在年底發放獎金，是在運用哪一種權力？", "opts": {"A": "獎賞權", "B": "強制權", "C": "專家權", "D": "參照權"}, "answer": "A", "tag": "權力來源", "explain": "能給予獎金、升遷等正面獎賞的是獎賞權 Reward Power。"}, {"n": 17, "q": "傳統「由上而下」的組織通常屬於 ________ 的組織。", "opts": {"A": "大致集權", "B": "大致分權", "C": "完全分權", "D": "完全集權"}, "answer": "A", "tag": "集權／分權", "explain": "傳統由上而下結構通常偏向集權，但不是絕對完全的集權。"}, {"n": 18, "q": "具有高度專業分工、正式化與集權程度的組織稱為 ________ 組織。", "opts": {"A": "有機式", "B": "水平式", "C": "學習型", "D": "機械式"}, "answer": "D", "tag": "機械式組織", "explain": "高度專業化、正式化、集權，是機械式組織典型特徵。"}, {"n": 19, "q": "希望成為產業創新領導者的公司，最可能採取哪一種組織結構？", "opts": {"A": "機械式", "B": "有機式", "C": "簡單式", "D": "功能式"}, "answer": "B", "tag": "有機式組織", "explain": "創新與快速變動環境需要較彈性、較分權的有機式結構。"}, {"n": 20, "q": "矩陣式結構中的成員完成一項專案後，通常會 ________。", "opts": {"A": "回到原本的功能部門", "B": "留在該小組承接新專案", "C": "進入全組織共用的人力池", "D": "開始找新工作"}, "answer": "A", "tag": "矩陣式組織", "explain": "矩陣成員通常仍隸屬原功能部門；專案結束後回到功能部門。"}, {"n": 21, "q": "________ 是建立在領導者懲罰或控制能力上的權力。", "opts": {"A": "獎賞權", "B": "強制權", "C": "專家權", "D": "參照權"}, "answer": "B", "tag": "權力來源", "explain": "與第15題相同：懲罰或控制能力＝強制權。"}, {"n": 22, "q": "領導行為理論主要關注 ________。", "opts": {"A": "有效領導者是誰", "B": "有效領導者具有哪些特徵", "C": "如何辨識有效領導者", "D": "有效領導者做了什麼"}, "answer": "D", "tag": "領導行為論", "explain": "行為論關心有效領導者『做了什麼』，不是他們天生具有什麼特質。"}, {"n": 23, "q": "在情境領導理論（SLT）中，準備度（readiness）是指執行任務的 ________。", "opts": {"A": "能力", "B": "意願", "C": "能力與意願兩者", "D": "個人的動機"}, "answer": "C", "tag": "情境領導", "explain": "SLT 的 readiness / maturity 由能力與意願共同構成。"}, {"n": 24, "q": "領導者激勵追隨者超越個人利益並創造非凡成就，且對追隨者績效產生深遠影響，這是哪一種領導型態？", "opts": {"A": "指導型領導者", "B": "資訊型領導者", "C": "交易型領導者", "D": "轉換型領導者"}, "answer": "D", "tag": "轉換型領導", "explain": "使追隨者超越個人利益並創造非凡成就，是轉換型領導的典型描述。"}, {"n": 25, "q": "哪一種類型的領導者較可能造成「過度領導、管理不足（over-leading and under-managing）」的現象？", "opts": {"A": "交易型", "B": "魅力型", "C": "特質型", "D": "轉換型"}, "answer": "B", "tag": "魅力型領導", "explain": "題庫把 over-leading and under-managing 對應到魅力型領導者。"}, {"n": 26, "q": "依工作特性模式（JCM）的定義，下列何者是指工作對他人生活或工作的重大影響程度？", "opts": {"A": "任務重要性（Task significance）", "B": "任務完整性（Task identity）", "C": "技能多樣性（Skill variety）", "D": "自主性（Autonomy）"}, "answer": "A", "tag": "工作特性", "explain": "題幹中的『對他人生活或工作的重大影響』就是 Task significance。"}, {"n": 27, "q": "依費德勒的觀點，當你的領導風格與情境不適配時，應該怎麼做？", "opts": {"A": "改變領導者風格", "B": "改變情境", "C": "改變風格或情境效果相同", "D": "改變獎酬制度"}, "answer": "B", "tag": "費德勒", "explain": "費德勒假設領導風格相對固定；不適配時應改變情境或更換領導者。"}, {"n": 28, "q": "下列哪一種領導型態可描述為提供較少指導與較少支持？", "opts": {"A": "指導型（Directing）", "B": "推銷型（Selling）", "C": "參與型（Participating）", "D": "授權型（Delegating）"}, "answer": "D", "tag": "情境領導", "explain": "高能力、高意願時，領導者可提供最低程度的指導與支持，即 Delegating。"}, {"n": 29, "q": "依費德勒研究，在最有利或最不利的情境下，哪一種領導行為最有效？", "opts": {"A": "任務導向", "B": "人際／關係導向", "C": "參與式", "D": "成就導向"}, "answer": "A", "tag": "費德勒", "explain": "費德勒模型中，情境非常有利或非常不利時，任務導向領導較有效。"}, {"n": 30, "q": "領導（Leadership）是 ________。", "opts": {"A": "一種過程", "B": "一種特質", "C": "一種可在領導者身上發現的魅力", "D": "以上皆是"}, "answer": "A", "tag": "領導定義", "explain": "講義定義領導為『影響他人朝預期目標邁進的過程』，因此最佳答案是 process。"}, {"n": 31, "q": "管理中的控制功能，很重要的一部分是 ________。", "opts": {"A": "制定策略", "B": "設定目標", "C": "修正績效問題", "D": "建立組織結構"}, "answer": "C", "tag": "控制", "explain": "控制的重點是發現偏差後修正績效問題，使工作回到計畫軌道。"}, {"n": 32, "q": "某汽車公司比起總銷售量，更重視品質衡量，這家公司最可能希望在 ________ 方面表現卓越。", "opts": {"A": "顧客滿意度", "B": "效率", "C": "員工滿意度", "D": "單位成本"}, "answer": "A", "tag": "控制衡量", "explain": "重視品質而非單純數量，最直接對應顧客滿意與價值，而非效率或單位成本。"}, {"n": 33, "q": "統計報告的一項缺點，是它可能忽略 ________ 的績效衡量。", "opts": {"A": "主觀性", "B": "客觀性", "C": "正面性", "D": "負面性"}, "answer": "A", "tag": "績效資訊來源", "explain": "統計報告擅長量化，但容易忽略主觀、非量化的績效面向。"}, {"n": 34, "q": "下列何者是最完整的績效衡量方式？", "opts": {"A": "走動式管理（MBWA）", "B": "口頭報告", "C": "圖表", "D": "書面報告"}, "answer": "D", "tag": "績效資訊來源", "explain": "講義指出書面報告最正式、最完整，且易於後續分類與查找。"}, {"n": 35, "q": "要執行控制程序的第二步，電動刮鬍刀公司的管理者應把實際銷售數量與 ________ 比較。", "opts": {"A": "競爭者的銷售總量", "B": "原先規劃的銷售目標", "C": "去年的銷售總量", "D": "潛在顧客人數"}, "answer": "B", "tag": "控制程序", "explain": "控制第二步是把實際績效與預設標準／規劃目標比較。"}, {"n": 36, "q": "當實際績效超出可接受的變異範圍時，稱為 ________。", "opts": {"A": "重大偏差（significant deviation）", "B": "不重大偏差", "C": "可接受偏差", "D": "大型偏差"}, "answer": "A", "tag": "控制程序", "explain": "超出可接受變異範圍即屬重大偏差 significant deviation。"}, {"n": 37, "q": "立即矯正行動（immediate corrective action）的目的在於 ________。", "opts": {"A": "找出問題根本原因", "B": "讓績效回到正軌", "C": "徹底重整組織", "D": "懲罰績效不佳員工"}, "answer": "B", "tag": "矯正行動", "explain": "立即矯正是先讓績效回到正軌；找根本原因屬較徹底的基本矯正。"}, {"n": 38, "q": "哪一種控制是在實際工作進行的同時發生？", "opts": {"A": "事後控制（feedback）", "B": "即時控制（concurrent）", "C": "反向控制", "D": "事前控制（feedforward）"}, "answer": "B", "tag": "控制類型", "explain": "工作正在進行時同步監督與修正＝即時控制 concurrent。"}, {"n": 39, "q": "動作影集在正式拍攝前，先針對尚未完成的劇本進行讀本，演員、編劇、製作人與導演可提出意見與修改。這屬於哪一種控制？", "opts": {"A": "事後控制", "B": "即時控制", "C": "自發控制", "D": "事前控制"}, "answer": "D", "tag": "控制類型", "explain": "正式拍攝前先讀本、提前找問題並修正＝事前控制 feedforward。"}, {"n": 40, "q": "平衡計分卡會在四個關鍵績效領域設定目標，並評估 ________。", "opts": {"A": "是否達成其中多數目標", "B": "四個目標是否全部達成", "C": "財務目標是否優於其他目標", "D": "哪些目標被超越"}, "answer": "B", "tag": "平衡計分卡", "explain": "題庫設定的答案是四個關鍵績效領域都要評估是否達成。"}, {"n": 41, "q": "高階管理者最能如何展現對企業倫理實務的承諾？", "opts": {"A": "採用並落實書面道德準則", "B": "閱讀員工電子郵件", "C": "採取分權決策", "D": "與其他公司合作", "E": "監控員工網路搜尋"}, "answer": "A", "tag": "企業倫理", "explain": "題庫重點：高階主管以採用並實際執行書面道德準則來展現倫理承諾。"}, {"n": 42, "q": "聘僱、解僱、工作條件、隱私與尊重等議題，屬於哪一類倫理？", "opts": {"A": "對經濟代理人的行為", "B": "對員工的行為", "C": "對組織的行為", "D": "消除利益衝突", "E": "社會責任"}, "answer": "B", "tag": "企業倫理", "explain": "聘僱、解僱、工作條件、隱私與尊重，都直接屬於對員工的倫理議題。"}, {"n": 43, "q": "Woojin 是新進員工，希望自己的所有行為都能支持組織核心原則與價值。他最適合從哪裡了解組織特別重視的價值與原則？", "opts": {"A": "大專院校", "B": "已離職的高階主管", "C": "組織中的同儕", "D": "書面準則與政策", "E": "小型企業管理局"}, "answer": "D", "tag": "企業倫理", "explain": "若要知道組織正式宣示的核心原則，題庫指向書面準則與政策。"}, {"n": 44, "q": "直接受到組織實務影響的群體、個人與組織，稱為什麼？", "opts": {"A": "主要利益代理人", "B": "社會稽核者", "C": "競爭者", "D": "組織利害關係人", "E": "地方社區"}, "answer": "D", "tag": "利害關係人", "explain": "題幹直接描述『受到組織實務影響的群體、個人與組織』，即 organizational stakeholders。"}, {"n": 45, "q": "每家公司在維持與報告財務狀況時，都必須做到什麼？", "opts": {"A": "以融資方式買股票", "B": "採用創意會計", "C": "支持股價上升", "D": "追求預測利潤率最大化", "E": "遵循一般公認會計原則"}, "answer": "E", "tag": "企業倫理", "explain": "題庫以遵循一般公認會計原則作為財務報告的基本要求。"}, {"n": 46, "q": "製造工廠排放的一氧化碳會造成哪一類污染？", "opts": {"A": "噪音污染", "B": "土地污染", "C": "水污染", "D": "空氣污染", "E": "廢棄物污染"}, "answer": "D", "tag": "社會責任", "explain": "一氧化碳由工廠排放到大氣，題庫歸類為空氣污染。"}, {"n": 47, "q": "下列哪一機構規範廣告與定價行為，以保護消費者？", "opts": {"A": "一般公認會計原則", "B": "北美自由貿易協定", "C": "食品藥物管理局", "D": "聯邦貿易委員會（FTC）", "E": "兒童線上隱私保護法"}, "answer": "D", "tag": "消費者保護", "explain": "題庫答案：聯邦貿易委員會 FTC 負責廣告與定價實務的消費者保護。"}, {"n": 48, "q": "企業真誠希望改善社會福祉，並主動尋找對社會做出正面貢獻的機會，屬於哪一種社會責任立場？", "opts": {"A": "阻礙型", "B": "調適型", "C": "社會調適", "D": "防禦型", "E": "主動型（Proactive）"}, "answer": "E", "tag": "社會責任", "explain": "主動尋找改善社會福祉機會，對應 proactive 主動型立場。"}, {"n": 49, "q": "政府可用哪一種「間接規範」方式影響企業社會責任？", "opts": {"A": "制定法律", "B": "支持股東", "C": "對違規者處以罰款", "D": "提供稅賦誘因", "E": "與外國政府合作"}, "answer": "D", "tag": "社會責任", "explain": "題庫將稅賦誘因視為政府的間接規範方式。"}, {"n": 50, "q": "下列何者最能支持組織在社會責任與倫理領導上的立場？", "opts": {"A": "慈善捐贈", "B": "組織領導實務", "C": "直線與幕僚成員", "D": "利害關係人", "E": "政府介入"}, "answer": "B", "tag": "倫理領導", "explain": "題庫強調組織領導實務最能持續支持其社會責任與倫理立場。"}, {"n": 51, "q": "人力資源管理（HRM）程序最前面的三項活動主要與 ________ 有關。", "opts": {"A": "招募", "B": "規劃", "C": "訓練", "D": "縮編"}, "answer": "B", "tag": "人力資源", "explain": "題庫把 HRM 前三項活動歸為規劃面向。"}, {"n": 52, "q": "一般而言，________ 都會參與自己部門或單位的人力資源決策。", "opts": {"A": "極少數管理者", "B": "部分管理者", "C": "大多數管理者", "D": "所有管理者"}, "answer": "D", "tag": "人力資源", "explain": "人力決策並非只有 HR 部門；題庫答案是所有管理者都會參與自己單位的 HR 決策。"}, {"n": 53, "q": "下列何者「不應」成為影響薪酬與福利的因素？", "opts": {"A": "性別", "B": "年資", "C": "地理位置", "D": "員工績效水準"}, "answer": "A", "tag": "薪酬", "explain": "性別不應成為薪酬福利差異的正當因素。"}, {"n": 54, "q": "Rolland 的部門有職缺且需要快速補人。他要去哪裡找到具備合適技能、又熟悉組織及其價值觀的人？", "opts": {"A": "員工資訊系統", "B": "線上求職網站", "C": "政府就業機構", "D": "競爭者"}, "answer": "A", "tag": "招募", "explain": "若要快速找既有技能且熟悉公司價值的人，優先查看內部員工資訊系統。"}, {"n": 55, "q": "人力資源管理程序中最重要的環境因素是 ________。", "opts": {"A": "商業環境", "B": "自然環境", "C": "法律環境", "D": "科學社群"}, "answer": "C", "tag": "人力資源", "explain": "題庫答案把法律環境列為 HRM 最重要的環境因素。"}, {"n": 56, "q": "下列何者「不是」有效薪酬制度的結果？", "opts": {"A": "維持員工動機", "B": "吸引優秀人才", "C": "使勞動力更高度工會化", "D": "留住優秀人才"}, "answer": "C", "tag": "薪酬", "explain": "有效薪酬制度應吸引、留任並激勵人才；『更高度工會化』不是其目標成果。"}, {"n": 57, "q": "人資管理者要準確估計組織的人力需求，應評估下列哪一項？", "opts": {"A": "就業與失業統計", "B": "組織產品的需求", "C": "整體經濟狀況", "D": "競爭者表現"}, "answer": "B", "tag": "人力規劃", "explain": "產品需求會直接影響需要多少人力，因此是估算人力需求的重要依據。"}, {"n": 58, "q": "360 度回饋與其他績效評估方法不同之處，在於它包含 ________。", "opts": {"A": "書面短文", "B": "員工主管的回饋", "C": "誠實的回饋", "D": "所有與該員工互動者的回饋"}, "answer": "D", "tag": "績效評估", "explain": "360 度回饋的特色是來自多方、所有與員工互動者的回饋。"}, {"n": 59, "q": "下列皆為新進員工導入（orientation）的目標，除了 ________。", "opts": {"A": "降低焦慮", "B": "讓員工熟悉工作", "C": "介紹同事", "D": "討論薪資與福利"}, "answer": "D", "tag": "新人導入", "explain": "題庫認為導入重點在降低焦慮、熟悉工作與同事；薪資福利討論不是此題列的核心目標。"}, {"n": 60, "q": "在下列選項中，評估訓練計畫最好的方式是看 ________。", "opts": {"A": "受訓者自認學到多少", "B": "訓練方法成本多高", "C": "受訓者實際工作績效", "D": "受訓者記住多少資訊"}, "answer": "C", "tag": "訓練評估", "explain": "最能驗證訓練是否有效的是受訓後的實際工作績效。"}, {"n": 61, "q": "下列何者代表產品的功能，以及擁有該產品所帶來的情感滿足？", "opts": {"A": "特色（Features）", "B": "需求", "C": "利益／效益（Benefits）", "D": "安全裝置", "E": "保證"}, "answer": "C", "tag": "產品", "explain": "題幹把功能與擁有產品的情感滿足合在一起，題庫答案為 Benefits。"}, {"n": 62, "q": "組織使用什麼來與客戶建立更好、更強的資訊連結？", "opts": {"A": "顧客關係管理（CRM）", "B": "資料倉儲", "C": "工業行銷", "D": "占有效用", "E": "資料探勘"}, "answer": "A", "tag": "CRM", "explain": "建立更強的客戶資訊連結＝Customer Relationship Management。"}, {"n": 63, "q": "行銷人員必須辨識組織邊界外、可能影響行銷方案的因素。這稱為 ________。", "opts": {"A": "品牌競爭", "B": "外部環境", "C": "資料探勘", "D": "競爭環境", "E": "國際競爭"}, "answer": "B", "tag": "行銷環境", "explain": "組織邊界之外會影響行銷方案的因素，統稱 external environment。"}, {"n": 64, "q": "與產品相關的一整組利益與特色，稱為什麼？", "opts": {"A": "產品組合", "B": "特殊套裝", "C": "服務組合", "D": "便利性", "E": "價值套組（Value package）"}, "answer": "E", "tag": "產品", "explain": "題庫把產品的一整組利益與特色稱為 value package。"}, {"n": 65, "q": "一群彼此密切相關，或銷售給同一顧客群的產品，稱為 ________。", "opts": {"A": "產品線（Product line）", "B": "特殊產品", "C": "產品組合", "D": "便利組合", "E": "生產組合"}, "answer": "A", "tag": "產品線", "explain": "一群彼此密切相關或賣給同一顧客群的產品＝Product line。"}, {"n": 66, "q": "下列何者是能提高顧客滿意度的有形與無形特徵？", "opts": {"A": "便利性", "B": "特色（Features）", "C": "獎勵", "D": "利益（Benefits）", "E": "績效"}, "answer": "B", "tag": "產品特色", "explain": "題庫把提高顧客滿意度的有形與無形特徵對應到 Features。"}, {"n": 67, "q": "公司透過自己擁有的銷售據點系統來配送商品，使用的是哪一種配銷通路？", "opts": {"A": "直接配銷", "B": "零售配銷", "C": "批發配銷", "D": "代理商配銷", "E": "經紀商配銷"}, "answer": "A", "tag": "配銷", "explain": "透過公司自己擁有的銷售據點系統＝Direct distribution。"}, {"n": 68, "q": "若生產者希望產品在銷售過程中獲得促銷優勢與更多關注，應採用哪一種配銷方式？", "opts": {"A": "選擇性配銷（Selective）", "B": "衝突式", "C": "獨家配銷", "D": "密集配銷", "E": "領導式"}, "answer": "A", "tag": "配銷", "explain": "題庫答案為 Selective distribution；重點是挑選部分通路以取得較佳銷售注意。"}, {"n": 69, "q": "製造商只授權極少數零售商或批發商銷售產品，稱為哪一種配銷？", "opts": {"A": "密集配銷", "B": "直接通路配銷", "C": "銷售代理配銷", "D": "獨家配銷（Exclusive）", "E": "選擇性配銷"}, "answer": "D", "tag": "配銷", "explain": "只授權極少數零售或批發商＝Exclusive distribution。"}, {"n": 70, "q": "下列何者最能描述「配銷通路（distribution channel）」？", "opts": {"A": "把產品賣給其他企業，再由其轉售給消費者的中間商群體", "B": "讓產品從生產者流向消費者的相互依賴企業網絡", "C": "在決定成員角色與報酬時最有權力的通路成員", "D": "蒐集買賣雙方資訊的網路配銷通路", "E": "透過推薦顧客取得佣金的賣方網絡"}, "answer": "B", "tag": "配銷通路", "explain": "配銷通路是產品從生產者到消費者之間，相互依賴的企業網絡。"}];
+const podcast = [{"title": "開場｜先抓考試結構", "text": "早安。這份複習只抓最可能幫你拿分的東西。題庫說明是問答題四題占四成，選擇題二十題占六成。問答題會從規劃、組織、領導、控制四大管理功能中抽三個主題，再從企業環境或企業功能抽一題。所以第一優先，是把四大管理功能說得完整；第二優先，才是用選擇題補細節。"}, {"title": "第一段｜四大管理功能", "text": "四大管理功能依序是規劃、組織、領導、控制。規劃是設定目標、制定策略與發展計畫；組織是決定需要做什麼、如何做、由誰去做；領導是影響、激勵並處理與人有關的事務；控制是監督活動，確保工作依計畫進行。你可以把它記成：先想要去哪裡，再安排誰來做，接著帶人去做，最後檢查有沒有做到。"}, {"title": "第二段｜規劃", "text": "規劃的正式定義，是定義組織目標、建立達成目標的整體策略，並發展全面性計畫，以整合與協調活動。規劃有四個重要功能：提供方向、降低不確定性、減少資源重疊與浪費、建立控制指標。計畫 Plans 是達成目標的一系列方案；目標 Goals 是組織預期的成果。"}, {"title": "規劃｜策略性與戰術性", "text": "策略性規劃偏長期、範圍廣、方向性高，通常由高階管理者主導；戰術性規劃偏短期、範圍較局部、內容更具體，負責把策略轉化成部門行動。考問答時可以寫：兩者差異主要在時間幅度、使用廣度、明確性與管理層級。"}, {"title": "規劃｜SMART、MBO、SWOT", "text": "好的目標符合 SMART：Specific 明確、Measurable 可衡量、Attainable 可達成、Relevant 相關、Time-bound 有期限。MBO 目標管理則強調清楚的目標、參與式決策、明確期限與定期績效回饋。SWOT 裡，S 優勢與 W 劣勢屬於內部，O 機會與 T 威脅屬於外部。"}, {"title": "規劃｜策略", "text": "公司總體策略三大類是成長、穩定、更新。成長策略可記四個方向：集中、垂直整合、水平整合、多角化。事業競爭策略常見三種：差異化、成本領導、集中。差異化就是提供獨特產品；成本領導就是成為最低成本生產者；集中就是鎖定特定市場區隔。標竿管理則是以相關指標中的最佳對象為依據，指導公司的目標與行動。"}, {"title": "第三段｜組織", "text": "組織是把人與事安排協調，以達成目標。組織設計六大元素：專業分工、部門化、權責劃分、控制幅度、集權與分權、正式化。專業分工是把工作拆成不同任務；部門化則是把相關工作重新組合，例如功能別、產品別、顧客別或地區別。"}, {"title": "組織｜指揮鏈與權責", "text": "指揮鏈是由上到下的直線職權關係。指揮統一原則是，一名員工原則上只對一位管理者負責。職權 Authority 是因管理職位而產生的權利；職責 Responsibility 是因職位而應承擔的責任。控制幅度則是管理者可以有效指揮的員工數目。工作非常複雜、員工能力不足時，不適合過大的控制幅度。"}, {"title": "組織｜矩陣式與機械有機", "text": "矩陣式組織有雙重指揮鏈，同時結合功能與產品或專案。優點是能共享資源、連結相互依賴的工作；缺點是兩條指揮線可能衝突，員工無所適從。機械式組織通常高度專業化、正式化、集權，適合較穩定環境；有機式組織較分權、彈性高，適合創新與不確定環境。"}, {"title": "第四段｜領導與權力", "text": "領導是影響他人朝預期目標邁進的過程。五種權力來源一定要背：法制權，來自職位；強制權，來自懲處或控制；獎賞權，來自獎金升遷等獎賞；專家權，來自專業與特殊知識；參照權，來自個人特質或令人敬佩的影響力。"}, {"title": "領導｜三大研究路線", "text": "領導研究可分成特質論、行為論、情境或權變論。特質論找的是領導者有哪些特徵；行為論找的是有效領導者做了什麼；權變論的核心則是沒有一種領導方法在所有情境都最好，必須看領導風格與情境是否適配。"}, {"title": "領導｜費德勒", "text": "費德勒權變模型假設領導風格相對固定。如果風格與情境不合，不是要求領導者硬改風格，而是更換領導者或改變情境。三個重要情境因素是：領導者與成員關係、任務結構、職權。情境非常有利或非常不利時，任務導向較有效；中間情境偏關係導向。"}, {"title": "領導｜情境領導與路徑目標", "text": "情境領導理論強調部屬成熟度，也就是能力加意願。低能力低意願需要高指導；低能力高意願需要較多教導與支持；高能力低意願適合參與；高能力高意願則可以授權。路徑目標理論則說，領導者要指出達成目標的路徑，並依情境選擇指導、支援、參與或成就導向。"}, {"title": "第五段｜控制", "text": "控制是一種衡量、比較與修正的管理程序，目的在確保組織目標達成。控制程序只有三步：第一，衡量實際績效；第二，比較實際績效與預設標準；第三，採取管理行動。這三步非常容易出問答題。"}, {"title": "控制｜四種績效資訊", "text": "衡量績效有四種常見資訊來源。個人觀察是第一手資料，但可能主觀又費時。統計報告量化、客觀、便於分析，但可能忽略非量化因素。口頭報告快速而且有互動。書面報告最正式、最完整，也方便後續查找。"}, {"title": "控制｜事前、即時、事後", "text": "依控制發生時間，可分三種。事前控制 feedforward，是預測問題並先採預防措施；即時控制 concurrent，是工作進行中同步監督與修正；事後控制 feedback，是問題發生、產出完成後再矯正。記憶口訣：事前先防、即時邊做邊改、事後做完再改。"}, {"title": "第六段｜企業倫理與社會責任", "text": "題庫在企業倫理部分的關鍵字包括：書面道德準則、對員工的倫理、利害關係人與主動型社會責任。書面準則用來正式表達組織重視的價值與原則。利害關係人是會影響組織或受組織影響的個人、群體與組織。題庫中，真誠主動尋找改善社會福祉機會的企業，屬於 proactive 主動型立場。"}, {"title": "第七段｜人力資源", "text": "人資題庫要抓幾個詞。工作分析是蒐集職位的任務與需求；工作說明書描述工作本身要做什麼；工作規範描述任職者需要具備什麼條件。三百六十度回饋的特色是來自所有與員工互動的人。訓練是否有效，最有力的證據不是學員說學到多少，而是實際工作績效有沒有改善。"}, {"title": "第八段｜行銷", "text": "行銷題庫最容易出名詞辨識。CRM 是顧客關係管理，用來建立更強的客戶資訊連結。Product line 產品線，是一群彼此密切相關或賣給相同顧客群的產品。直接配銷是公司透過自己的銷售據點配送；獨家配銷是只授權極少數零售商或批發商。配銷通路則是產品從生產者到消費者之間，相互依賴的企業網絡。"}, {"title": "結尾｜最後一輪背誦", "text": "最後快速複誦十個點。第一，四大管理功能：規劃、組織、領導、控制。第二，SWOT：SW 內部、OT 外部。第三，公司總體策略：成長、穩定、更新。第四，成長方向：集中、垂直、水平、多角化。第五，矩陣式組織：雙重指揮鏈。第六，五種權力：法制、強制、獎賞、專家、參照。第七，費德勒：風格固定，不合就改情境或換領導者。第八，情境領導 readiness 等於能力加意願。第九，控制三步：衡量、比較、行動。第十，事前、即時、事後控制：先防、邊改、做完再改。今天起床後先聽完這一輪，再做二十題模擬考，就能知道哪個章節需要補。"}];
+
+let current=[], answered=0, correct=0, mode='practice', selected={}, flashDeck=[], flashIndex=0, flashBack=false;
+const wrongKey='biz_midterm_wrong_v3';
+function getWrong(){try{return JSON.parse(localStorage.getItem(wrongKey)||'[]')}catch(e){return []}}
+function saveWrong(arr){localStorage.setItem(wrongKey,JSON.stringify([...new Set(arr)]));updateWrongSummary();}
+function updateWrongSummary(){
+ const w=getWrong();
+ document.getElementById('wrongSummary').innerHTML = w.length ? `目前累積 <b>${w.length}</b> 題錯題：${w.join('、')}。可按「只做錯題」重練。` : '目前還沒有錯題紀錄。答錯後會自動記在這支裝置上。';
+}
+function shuffle(a){return [...a].sort(()=>Math.random()-.5)}
+function setMode(m){
+ mode=m; selected={};
+ document.getElementById('practiceTab').classList.toggle('active',m==='practice');
+ document.getElementById('examTab').classList.toggle('active',m==='exam');
+ document.getElementById('submitExam').style.display=m==='exam'?'inline-block':'none';
+ renderQuiz(20);
+}
+function startWrongMode(){
+ const ids=getWrong();
+ if(!ids.length){document.getElementById('score').textContent='目前沒有錯題，先做一回 20 題吧。';return;}
+ mode='practice';
+ document.getElementById('practiceTab').classList.add('active');
+ document.getElementById('examTab').classList.remove('active');
+ document.getElementById('submitExam').style.display='none';
+ renderQuizFrom(questions.filter(q=>ids.includes(q.n)));
+}
+function renderQuiz(n){renderQuizFrom(shuffle(questions).slice(0,n));}
+function renderQuizFrom(arr){
+ current=[...arr]; answered=0;correct=0;selected={};
+ document.getElementById('score').textContent=mode==='exam'?`模擬考：共 ${current.length} 題，作答後按「交卷看成績」。`:`0 / ${current.length} 已作答；答對 0 題`;
+ const box=document.getElementById('quizbox'); box.innerHTML='';
+ current.forEach((q,idx)=>{
+   const d=document.createElement('div');d.className='qcard';d.id='qcard-'+idx;
+   let opts=Object.entries(q.opts).map(([k,v])=>`<button class="opt" data-k="${k}" onclick="choose(this,${idx})"><b>${k})</b> ${escapeHtml(v)}</button>`).join('');
+   d.innerHTML=`<div class="qmeta"><span class="small">題庫第 ${q.n} 題</span><span class="tag">${escapeHtml(q.tag)}</span></div><b>${idx+1}. ${escapeHtml(q.q)}</b><div>${opts}</div><div class="answer">正確答案：${q.answer}</div><div class="explain"><b>這題在考：</b>${escapeHtml(q.tag)}<br>${escapeHtml(q.explain)}</div>`;
+   box.appendChild(d);
+ });
+ updateWrongSummary();
+}
+function choose(btn,idx){
+ const card=btn.closest('.qcard'), q=current[idx], pick=btn.dataset.k;
+ if(mode==='exam'){
+   selected[idx]=pick;
+   [...card.querySelectorAll('.opt')].forEach(b=>b.style.outline='');
+   btn.style.outline='2px solid #2563eb';
+   answered=Object.keys(selected).length;
+   document.getElementById('score').textContent=`模擬考：已作答 ${answered} / ${current.length} 題；完成後按「交卷看成績」。`;
+   return;
+ }
+ if(card.dataset.done)return;
+ card.dataset.done='1';answered++;
+ [...card.querySelectorAll('.opt')].forEach(b=>{
+   if(b.dataset.k===q.answer)b.classList.add('correct');
+   else if(b===btn)b.classList.add('wrong');
+   b.disabled=true;
+ });
+ const w=getWrong();
+ if(pick===q.answer){correct++; saveWrong(w.filter(n=>n!==q.n));}
+ else {saveWrong([...w,q.n]);}
+ card.querySelector('.answer').classList.add('show');
+ card.querySelector('.explain').classList.add('show');
+ document.getElementById('score').textContent=`${answered} / ${current.length} 已作答；答對 ${correct} 題（${Math.round(correct/answered*100)}%）`;
+}
+function submitExam(){
+ if(mode!=='exam')return;
+ let c=0, wrong=getWrong();
+ current.forEach((q,idx)=>{
+   const card=document.getElementById('qcard-'+idx), pick=selected[idx];
+   [...card.querySelectorAll('.opt')].forEach(b=>{
+     if(b.dataset.k===q.answer)b.classList.add('correct');
+     else if(b.dataset.k===pick && pick!==q.answer)b.classList.add('wrong');
+     b.disabled=true;
+   });
+   card.querySelector('.answer').classList.add('show');
+   card.querySelector('.explain').classList.add('show');
+   if(pick===q.answer){c++; wrong=wrong.filter(n=>n!==q.n)} else if(pick){wrong.push(q.n)}
+ });
+ saveWrong(wrong); correct=c;
+ const pct=Math.round(c/current.length*100);
+ document.getElementById('score').innerHTML=`交卷完成：<b>${c} / ${current.length}</b>，得分率 <b>${pct}%</b>。${pct>=80?'已經很穩，接著只刷錯題。':pct>=60?'有基本盤，優先把錯題章節補起來。':'先回到四大管理功能，再重做一回。'}`;
+}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+
+// Flashcards
+const flashBase=[
+ ['四大管理功能？','規劃、組織、領導、控制。'],
+ ['規劃的四個主要作用？','提供方向、降低不確定性、減少資源重疊與浪費、建立控制指標。'],
+ ['Plans 與 Goals 差在哪？','Plans 是達成目標的一系列方案；Goals 是組織預期成果。'],
+ ['策略性 vs 戰術性規劃？','策略性：長期、廣泛、方向性；戰術性：短期、局部、特定。'],
+ ['SWOT 怎麼分內外？','S/W 是內部；O/T 是外部。'],
+ ['公司總體策略三類？','成長、穩定、更新。'],
+ ['成長策略四方向？','集中、垂直整合、水平整合、多角化。'],
+ ['矩陣式組織最重要關鍵字？','雙重指揮鏈；優點是資源共享與協調，缺點是命令衝突。'],
+ ['組織設計六大元素？','專業分工、部門化、權責劃分、控制幅度、集權/分權、正式化。'],
+ ['職權 vs 職責？','職權是職位帶來的權利；職責是職位應承擔的責任。'],
+ ['控制幅度？','管理者可有效指揮的員工數目。'],
+ ['五種權力來源？','法制權、強制權、獎賞權、專家權、參照權。'],
+ ['Fiedler 的核心？','領導風格固定；不適配時改變情境或更換領導者。'],
+ ['Fiedler 三個情境因素？','領導者—成員關係、任務結構、職權。'],
+ ['SLT readiness？','能力＋意願。'],
+ ['Path-Goal 四種領導行為？','指導、支援、參與、成就導向。'],
+ ['控制三步？','衡量實際績效 → 與標準比較 → 採取管理行動。'],
+ ['四種績效資訊來源？','個人觀察、統計報告、口頭報告、書面報告。'],
+ ['控制三類？','事前 feedforward、即時 concurrent、事後 feedback。'],
+ ['標竿管理？','以相關指標中的最佳對象為依據，指導公司目標與行動。']
+];
+function shuffleCards(){flashDeck=shuffle(flashBase);flashIndex=0;flashBack=false;renderCard();}
+function renderCard(){
+ const el=document.getElementById('flashcard'); if(!flashDeck.length)shuffleCards();
+ el.className='flashcard'+(flashBack?' flashback':'');
+ el.innerHTML=flashBack?`<div><b>答案</b><br><br>${escapeHtml(flashDeck[flashIndex][1])}</div>`:`<div><b>${escapeHtml(flashDeck[flashIndex][0])}</b><br><span class="small">點一下翻面</span></div>`;
+ document.getElementById('flashcount').textContent=`${flashIndex+1} / ${flashDeck.length}`;
+}
+function flipCard(){flashBack=!flashBack;renderCard();}
+function nextCard(){flashIndex=(flashIndex+1)%flashDeck.length;flashBack=false;renderCard();}
+function prevCard(){flashIndex=(flashIndex-1+flashDeck.length)%flashDeck.length;flashBack=false;renderCard();}
+
+// Podcast using iOS/browser speech synthesis
+let podIndex=0, podStopped=true;
+function loadVoices(){
+ const sel=document.getElementById('voiceSel'); const voices=speechSynthesis.getVoices();
+ const zh=voices.filter(v=>/^zh/i.test(v.lang)||/Chinese|Mandarin|國語|中文/i.test(v.name));
+ const old=sel.value; sel.innerHTML='<option value="">自動選中文語音</option>'+zh.map(v=>`<option value="${escapeHtml(v.name)}">${escapeHtml(v.name)} (${v.lang})</option>`).join(''); if(old)sel.value=old;
+}
+function renderPodcastList(){
+ const box=document.getElementById('podcastList');box.innerHTML=podcast.map((p,i)=>`<div class="podcast-track" id="pod-${i}"><b>${i+1}. ${escapeHtml(p.title)}</b><div class="small" style="color:#cbd5e1">${escapeHtml(p.text)}</div></div>`).join('');
+}
+function startPodcast(){stopPodcast();podStopped=false;podIndex=0;speakNext();}
+function speakNext(){
+ if(podStopped||podIndex>=podcast.length){document.getElementById('podcastStatus').textContent=podIndex>=podcast.length?'播放完畢 ✓':'已停止';return;}
+ document.querySelectorAll('.podcast-track').forEach(x=>x.classList.remove('current')); const row=document.getElementById('pod-'+podIndex); if(row){row.classList.add('current');row.scrollIntoView({behavior:'smooth',block:'center'});}
+ const u=new SpeechSynthesisUtterance(podcast[podIndex].title+'。'+podcast[podIndex].text);u.lang='zh-TW';u.rate=parseFloat(document.getElementById('rateSel').value||'1');
+ const vn=document.getElementById('voiceSel').value; if(vn){const v=speechSynthesis.getVoices().find(x=>x.name===vn);if(v)u.voice=v;}
+ u.onend=()=>{podIndex++;speakNext();};u.onerror=()=>{document.getElementById('podcastStatus').textContent='語音播放中斷，可再按開始。';};
+ document.getElementById('podcastStatus').textContent=`播放中：${podIndex+1} / ${podcast.length}｜${podcast[podIndex].title}`;
+ speechSynthesis.speak(u);
+}
+function pausePodcast(){speechSynthesis.pause();document.getElementById('podcastStatus').textContent='已暫停';}
+function resumePodcast(){speechSynthesis.resume();document.getElementById('podcastStatus').textContent=`繼續播放：${podIndex+1} / ${podcast.length}`;}
+function stopPodcast(){podStopped=true;speechSynthesis.cancel();document.querySelectorAll('.podcast-track').forEach(x=>x.classList.remove('current'));}
+document.addEventListener('DOMContentLoaded',()=>{renderQuiz(20);updateWrongSummary();shuffleCards();renderPodcastList();loadVoices();});
+if('speechSynthesis' in window) speechSynthesis.onvoiceschanged=loadVoices;
+window.addEventListener('scroll',()=>{
+ const h=document.documentElement.scrollHeight-innerHeight;
+ document.getElementById('bar').style.width=(h?scrollY/h*100:0)+'%';
+});
+</script>
+</body></html>
