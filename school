@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>企業管理概論｜期中考互動複習 v3</title>
+<title>企業管理概論｜期中考互動複習</title>
 <style>
 :root{--bg:#f6f7fb;--card:#fff;--ink:#172033;--muted:#64748b;--accent:#2563eb;--accent2:#7c3aed;--good:#e8f7ef;--bad:#fff0f0;--line:#e5e7eb;--warn:#fff8df}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang TC","Noto Sans TC",sans-serif;background:var(--bg);color:var(--ink);line-height:1.65}
