@@ -188,7 +188,7 @@ h1 span{color:var(--blue)}
   <div class="name">第 10 組<span>當手機變成錢包</span></div>
   <div class="toolbar-actions">
     <button class="toolbar-button primary" id="exportPdf" type="button"></button>
-    <button class="toolbar-button" id="headerFull" type="button">全螢幕放映</button>
+    <button class="toolbar-button" id="headerFull" type="button">全螢幕</button>
   </div>
 </header>
 <div id="viewer"><div class="deck"><section class="slide cover" data-title="當手機變成錢包"><div class="cover-left"><h1>當手機<br/>變成<span>錢包</span></h1><p class="cover-sub">行動支付與無現金社會的商業秘密</p><p class="cover-topic">LINE Pay ・ Apple Pay ・ Tokenization</p><p class="group-id">資管一乙　｜　第 10 組</p></div><div aria-hidden="true" class="cover-right"><div class="halo"></div><div class="device"><div class="pill"></div><div class="device-head">Wallet <b>●●●</b></div><div class="debit"><span>Debit</span><strong>•••• 9086</strong><i>◪</i></div><div class="nfc-icon"><span></span><span></span><span></span></div><div class="ready">感應付款</div></div></div></section><section class="slide" data-title="50 元以下，大家更常用手機付款"><div class="inside"><h2>50 元以下，大家更常用手機付款</h2>
@@ -312,7 +312,7 @@ function show(n){
 }
 function syncPresentUi(){
   document.body.classList.toggle('is-presenting',presenting);
-  headerFull.textContent=presenting?'結束放映':'全螢幕';
+  headerFull.textContent=presenting?'結束':'全螢幕';
   fullButton.textContent=presenting?'⤢':'⛶';
   fullButton.title=presenting?'結束全螢幕':'全螢幕';
   applyScale();
