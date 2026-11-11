@@ -1,526 +1,223 @@
-<!doctype html><html lang="zh-Hant"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#ffffff"><title>當手機變成錢包</title><style>
-:root{
-  --blue:#0071e3;
-  --blue2:#52a8ff;
-  --ink:#111318;
-  --muted:#6b7686;
-  --line:#e8edf3;
-  --panel:#f5f8fb;
-  --bg:#ffffff;
-}
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/><meta content="light" name="color-scheme"/><title>當手機變成錢包</title><style>@page{size:13.333in 7.5in;margin:0}
+:root{--blue:#0071e3;--ink:#12151b;--soft:#f5f7fa;--line:#e6eaf0;--muted:#596577}
 *{box-sizing:border-box}
-html,body{margin:0;padding:0;background:#edf1f5;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC","Microsoft JhengHei",sans-serif;-webkit-font-smoothing:antialiased}
-a{color:inherit}
-.deck{position:relative;width:100vw;height:100dvh;overflow:hidden;background:#fff}
-.slide{position:absolute;inset:0;padding:clamp(36px,5.5vw,88px) clamp(34px,7.5vw,124px) clamp(38px,5.5vw,78px);display:flex;flex-direction:column;justify-content:center;opacity:0;pointer-events:none;transform:translateY(18px) scale(.992);transition:opacity .5s cubic-bezier(.2,.65,.2,1),transform .65s cubic-bezier(.2,.65,.2,1);background:#fff;overflow:hidden}
+html,body{margin:0;background:#fff;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;-webkit-font-smoothing:antialiased}
+.deck{position:relative;width:100vw;height:100dvh;overflow:hidden}
+.slide{position:absolute;inset:0;display:flex;align-items:center;background:#fff;padding:clamp(36px,5.5vw,80px) clamp(35px,7.2vw,116px);opacity:0;pointer-events:none;transform:translateY(17px);transition:transform .55s cubic-bezier(.2,.65,.2,1),opacity .48s;overflow:hidden}
 .slide.active{opacity:1;pointer-events:auto;transform:none;z-index:2}
-.slidebody{position:relative;z-index:2;width:100%}
-.eyebrow{font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);margin-bottom:20px}
-.slide h2{font-size:clamp(34px,3.8vw,62px);font-weight:770;letter-spacing:-.055em;line-height:1.18;margin:0 0 26px;max-width:1100px}
-.sub{font-size:clamp(18px,1.7vw,28px);color:#4f5c6d;letter-spacing:-.03em;line-height:1.55;max-width:920px}
-.kicker{font-size:13px;color:#97a3b2;margin-top:22px}
-.cover{padding-left:9vw;background:linear-gradient(120deg,#fff 0%,#fff 58%,#f1f7ff 100%)}
-.cover-inner{width:58%;position:relative;z-index:2}
-.cover h1{font-size:clamp(70px,8.8vw,150px);line-height:1.08;letter-spacing:-.08em;margin:0 0 16px;font-weight:800}
-.cover h1 span{color:var(--blue)}
-.cover .lead{font-size:clamp(24px,2.15vw,34px);color:#5b6777;letter-spacing:-.04em}
-.cover .mini{margin-top:54px;color:#8d98a7;font-size:15px}
-.phone-scene{position:absolute;right:7%;top:6%;width:35%;height:86%;display:flex;align-items:center;justify-content:center}
-.orb{position:absolute;width:130%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 50% 45%,#dcecff 0%,rgba(220,236,255,.4) 48%,transparent 72%);animation:breathe 6.2s ease-in-out infinite}
-.iphone{position:relative;width:min(286px,66%);aspect-ratio:9/18.4;border:9px solid #1c222a;border-radius:46px;background:#f9fbfd;box-shadow:0 34px 80px #25497a25,0 5px 15px #13223112;transform:rotate(7deg);animation:float 5.8s ease-in-out infinite;padding:33px 17px 18px}
-.island{position:absolute;top:10px;left:32%;width:36%;height:22px;border-radius:18px;background:#151b22}
-.wallet-top{font-size:12px;font-weight:700;display:flex;justify-content:space-between}
-.bank-card{position:absolute;top:23%;left:8%;width:84%;height:34%;border-radius:20px;background:linear-gradient(140deg,#101b2c,#404d61);color:#fff;padding:18px;box-shadow:0 12px 26px #16324c29}
-.bank-card .digits{position:absolute;bottom:18px;left:18px;font-size:13px;letter-spacing:.08em}
-.bank-card .chip{position:absolute;right:18px;bottom:20px;color:#d2dae4}
-.tap-ring{position:absolute;top:61%;left:calc(50% - 23px);width:46px;height:46px;border-radius:50%;border:2px solid var(--blue);box-shadow:0 0 0 0 rgba(0,113,227,.18);animation:tapPulse 2.2s ease-out infinite}
-.tap-ring:before,.tap-ring:after{content:"";position:absolute;inset:8px;border-radius:50%;border:2px solid rgba(0,113,227,.55)}
-.tap-ring:after{inset:16px}
-.ready{position:absolute;top:76%;left:0;right:0;text-align:center;color:#7d8898;font-size:10px}
-
-.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;max-width:960px}
-.metric{background:var(--panel);border-radius:28px;padding:34px 36px 30px}
-.metric-name{font-size:22px;color:#5a6678;font-weight:650}
-.metric-num{font-size:clamp(82px,8vw,124px);line-height:1;margin:16px 0 18px;font-weight:760;letter-spacing:-.08em}
-.metric-num.blue{color:var(--blue)}
-.metric-num span{font-size:.38em;color:#6c7788;margin-left:3px}
-.bar{height:12px;border-radius:999px;background:#dde4ed;overflow:hidden;position:relative}
-.bar-fill{height:100%;width:0;border-radius:999px;position:relative;box-shadow:0 0 16px rgba(0,113,227,.25);transition:width 1.4s cubic-bezier(.2,.7,.2,1)}
-.bar-fill.blue{background:linear-gradient(90deg,#5bb2ff 0%,#0071e3 52%,#58b2ff 100%)}
-.bar-fill.gray{background:linear-gradient(90deg,#c6ced9 0%,#98a4b3 55%,#c6ced9 100%)}
-.bar-fill::after{content:"";position:absolute;top:0;bottom:0;left:-28%;width:24%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.85),transparent);animation:shimmer 1.8s linear infinite}
-.bottom-big{font-size:30px;letter-spacing:-.045em;line-height:1.42;margin-top:34px}
-
-.compare{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:1040px}
-.card{background:var(--panel);border-radius:28px;padding:30px 30px 26px;min-height:315px;display:flex;flex-direction:column}
-.badge{width:60px;height:60px;border-radius:18px;background:#e5f2ff;display:grid;place-items:center;color:var(--blue);font-size:28px;margin-bottom:18px}
-.card .cap{font-size:13px;font-weight:700;letter-spacing:.12em;color:#7d8897;text-transform:uppercase}
-.card h3{font-size:38px;line-height:1.12;letter-spacing:-.06em;margin:14px 0 14px}
-.card p{font-size:21px;line-height:1.6;color:#5f6b7d;margin:0}
-.chipline{margin-top:auto;padding-top:20px;color:var(--blue);font-size:15px;font-weight:650}
-
-.stores{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
-.store{background:var(--panel);border-radius:22px;padding:22px;min-height:150px;display:flex;flex-direction:column;justify-content:space-between}
-.store b{font-size:12px;color:var(--blue);letter-spacing:.14em}
-.store strong{font-size:24px;line-height:1.25;letter-spacing:-.04em;margin-top:16px}
-.store small{font-size:15px;color:#7d8797}
-
-.matrix{background:#fff;border:1px solid var(--line);border-radius:26px;overflow:hidden;box-shadow:0 10px 24px rgba(13,27,62,.05);max-width:1120px}
-.matrix table{width:100%;border-collapse:collapse}
-.matrix thead th{background:#f6f9fc;color:#627286;font-size:14px;letter-spacing:.04em;padding:18px 14px;text-align:center}
-.matrix th:first-child,.matrix td:first-child{text-align:left;padding-left:24px}
-.matrix td{padding:22px 14px;border-top:1px solid var(--line);text-align:center;font-size:18px;font-weight:650}
-.matrix td:first-child{font-weight:700;color:#172030;font-size:17px}
-.yes{color:var(--blue)} .maybe{color:#b0b8c4}.cashonly{color:#9aa6b5}
-
-.facts-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;max-width:1100px}
-.fact{background:var(--panel);border-radius:24px;padding:24px 22px;min-height:180px}
-.fact .small{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#7f8a99;font-weight:700}
-.fact strong{display:block;font-size:30px;line-height:1.15;letter-spacing:-.055em;margin-top:16px}
-.fact p{margin:14px 0 0;font-size:16px;line-height:1.6;color:#637084}
-
-.cost-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:1040px}
-.cost{background:var(--panel);border-radius:28px;padding:30px 28px;min-height:300px;display:flex;flex-direction:column}
-.cost.highlight{background:#edf5ff}
-.cost .tag{font-size:13px;font-weight:700;color:#768191;letter-spacing:.12em;text-transform:uppercase}
-.money{font-size:clamp(58px,6.2vw,88px);font-weight:760;letter-spacing:-.08em;line-height:1;margin:22px 0 18px}
-.money span{font-size:.33em;color:#6d7a8b}
-.rule{height:12px;border-radius:999px;background:#dde4ed;overflow:hidden;position:relative;margin-bottom:20px}
-.rule i{display:block;height:100%;width:0;border-radius:999px;position:relative;transition:width 1.5s cubic-bezier(.2,.7,.2,1);box-shadow:0 0 16px rgba(0,113,227,.2)}
-.rule i::after{content:"";position:absolute;top:0;bottom:0;left:-26%;width:24%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.95),transparent);animation:shimmer 1.9s linear infinite}
-.rule.blue i{background:linear-gradient(90deg,#71c0ff,#0071e3,#75c3ff)}
-.rule.gray i{background:linear-gradient(90deg,#d7e5f6,#86b7ea,#d7e5f6)}
-.cost p{font-size:18px;line-height:1.6;color:#617083;margin:0}
-
-.timeline{display:grid;grid-template-columns:1fr 56px 1fr 56px 1fr;align-items:center;gap:8px;max-width:1080px}
-.time-card{background:var(--panel);border-radius:24px;min-height:210px;padding:28px 24px;display:flex;flex-direction:column;justify-content:center}
-.time-card .when{font-size:13px;letter-spacing:.12em;font-weight:700;color:#7f8a99;text-transform:uppercase}
-.time-card strong{font-size:30px;letter-spacing:-.055em;line-height:1.2;margin:12px 0 10px}
-.time-card p{font-size:18px;line-height:1.6;color:#627085;margin:0}
-.arrow{font-size:42px;color:var(--blue);text-align:center;animation:flowArrow 2s ease-in-out infinite}
-
-.interview{display:grid;grid-template-columns:42% 1fr;gap:30px;max-width:1120px;align-items:start}
-.quote-card{background:#edf5ff;border-radius:30px;padding:34px 32px;min-height:350px}
-.quote-cap{font-size:12px;letter-spacing:.14em;color:var(--blue);font-weight:700;text-transform:uppercase}
-.quote-card .name{font-size:38px;font-weight:770;letter-spacing:-.06em;margin-top:18px}
-.quote-card .role{font-size:18px;color:#708094;margin-top:8px}
-.quote-card .quote{font-size:28px;line-height:1.55;letter-spacing:-.045em;margin-top:34px}
-.interview-points{display:grid;gap:16px}
-.ip{padding:22px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:52px 1fr;gap:14px;align-items:start}
-.ip b{font-size:15px;color:var(--blue)}
-.ip strong{display:block;font-size:23px;letter-spacing:-.04em;margin-bottom:8px}
-.ip p{margin:0;color:#617083;font-size:18px;line-height:1.6}
-
-.loop{display:flex;align-items:center;gap:18px;max-width:1120px}
-.loop-item{background:var(--panel);border-radius:28px;min-height:220px;padding:26px;flex:1;display:flex;flex-direction:column;justify-content:space-between}
-.loop-num{font-size:12px;letter-spacing:.18em;color:var(--blue);font-weight:700}
-.loop-item strong{font-size:34px;letter-spacing:-.05em}
-.loop-item p{font-size:18px;line-height:1.6;color:#637083;margin:0}
-.loop-arrow{font-size:36px;color:var(--blue);animation:flowArrow 2s ease-in-out infinite}
-.understatement{font-size:30px;letter-spacing:-.045em;line-height:1.48;margin-top:34px;color:#5b6778}
-.understatement strong{color:#182436}
-
-.secure-grid{display:grid;grid-template-columns:1fr 64px 1fr 64px 1fr;align-items:center;gap:8px;max-width:1120px}
-.secure-step{background:var(--panel);border:1px solid #e5ebf2;border-radius:26px;padding:26px 22px;min-height:230px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
-.secure-step.active{background:#edf5ff;border-color:#d9e9ff;box-shadow:0 0 0 1px rgba(0,113,227,.04),0 22px 40px rgba(0,113,227,.08)}
-.secure-step .cap{font-size:12px;letter-spacing:.16em;color:#7c8798;font-weight:700;text-transform:uppercase}
-.secure-step strong{font-size:30px;letter-spacing:-.055em;line-height:1.22;margin:14px 0 10px}
-.secure-step p{font-size:18px;line-height:1.6;color:#5f6c7e;margin:0}
-.secure-arrow{font-size:40px;color:var(--blue);text-align:center;animation:flowArrow 2s ease-in-out infinite}
-
-.token-scene{position:relative;max-width:1130px;height:400px;border-radius:34px;background:linear-gradient(180deg,#f5f8fb 0%,#ffffff 100%);border:1px solid var(--line);overflow:hidden;padding:36px}
-.token-track{position:absolute;left:140px;right:140px;top:190px;height:4px;background:linear-gradient(90deg,#dce3ec,#dce3ec);border-radius:999px}
-.token-track::after{content:"";position:absolute;inset:-6px 0; background:linear-gradient(90deg,transparent,rgba(0,113,227,.11),transparent);filter:blur(6px)}
-.node{position:absolute;width:180px;height:180px;border-radius:32px;background:#fff;border:1px solid var(--line);box-shadow:0 18px 36px rgba(15,30,65,.06);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:18px}
-.node b{font-size:24px;line-height:1.2;letter-spacing:-.045em}
-.node span{display:block;margin-top:10px;font-size:16px;line-height:1.45;color:#6a7687}
-.n1{left:38px;top:100px}.n2{left:calc(50% - 90px);top:34px;background:#edf5ff;border-color:#dbeaff}.n3{right:38px;top:100px}
-.node-icon{width:56px;height:56px;border-radius:18px;background:#eaf3ff;color:var(--blue);display:grid;place-items:center;font-size:26px;margin-bottom:16px}
-.packet{position:absolute;top:170px;left:150px;width:128px;height:44px;border-radius:999px;background:linear-gradient(90deg,#8fd0ff,#0071e3 65%,#9cd4ff);box-shadow:0 0 18px rgba(0,113,227,.3);display:grid;place-items:center;color:#fff;font-size:15px;font-weight:700;letter-spacing:.08em;animation:packet 4.5s linear infinite}
-.packet.alt{top:212px;height:34px;width:98px;background:linear-gradient(90deg,#c4e6ff,#4ca6ff 70%,#d5efff);animation-delay:1.4s;opacity:.9}
-.spark{position:absolute;top:92px;left:calc(50% - 16px);width:32px;height:32px;border-radius:50%;background:rgba(0,113,227,.14);animation:pulseGlow 1.8s ease-in-out infinite}
-.spark::before,.spark::after{content:"";position:absolute;inset:0;border-radius:50%;border:1px solid rgba(0,113,227,.28)}
-.spark::after{inset:6px}
-.token-caption{display:flex;justify-content:space-between;gap:24px;margin-top:28px;font-size:19px;color:#5c697a;letter-spacing:-.025em}
-.token-caption strong{color:#152031}
-
-.two-pillars{display:grid;grid-template-columns:1fr 1fr;gap:22px;max-width:1060px}
-.pillar{background:var(--panel);border-radius:28px;padding:28px;min-height:290px}
-.pillar span{font-size:13px;color:var(--blue);letter-spacing:.12em;font-weight:700;text-transform:uppercase}
-.pillar h3{font-size:40px;letter-spacing:-.06em;line-height:1.12;margin:18px 0 16px}
-.pillar p{font-size:21px;line-height:1.62;color:#627083;margin:0}
-.answer-strip{font-size:30px;line-height:1.48;letter-spacing:-.045em;margin-top:30px;color:#627083}
-.answer-strip strong{color:#132033}
-
-.takeaway{display:grid;grid-template-columns:1fr 1fr;gap:28px;max-width:1040px}
-.takeaway .item{padding-top:20px;border-top:1px solid var(--line);display:grid;grid-template-columns:56px 1fr;column-gap:12px}
-.takeaway b{font-size:16px;color:var(--blue)}
-.takeaway strong{font-size:29px;letter-spacing:-.045em}
-.takeaway p{grid-column:2;margin:8px 0 0;font-size:18px;line-height:1.58;color:#667385}
-.closing{font-size:32px;line-height:1.5;letter-spacing:-.045em;color:#5d6a7a;margin-top:40px}
-.closing strong{color:#112032}
-
-.chrome{position:fixed;bottom:24px;right:26px;z-index:40;display:flex;align-items:center;gap:14px}
-.chrome button{width:43px;height:43px;border:none;border-radius:50%;background:#f1f4f8;font-size:19px;color:#33415a;cursor:pointer}
-.chrome button:hover{background:#dceafc}
-.counter{font-size:12px;color:#8a95a5;font-weight:650;min-width:58px;text-align:center}
-.kbdhint{position:fixed;left:32px;bottom:28px;color:#b4bec8;font-size:12px;z-index:40}
-.topline{position:fixed;top:0;left:0;height:3px;background:var(--blue);z-index:99;transition:width .45s}
-.slide.active .slidebody>*{animation:enter .58s ease-out both}
-.slide.active .slidebody>*:nth-child(2){animation-delay:.05s}.slide.active .slidebody>*:nth-child(3){animation-delay:.12s}.slide.active .slidebody>*:nth-child(4){animation-delay:.17s}
-
-@keyframes enter{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
-@keyframes float{0%,100%{transform:translateY(0) rotate(7deg)}50%{transform:translateY(-16px) rotate(5.6deg)}}
-@keyframes breathe{0%,100%{transform:scale(.95);opacity:.76}50%{transform:scale(1.07);opacity:1}}
-@keyframes tapPulse{0%{box-shadow:0 0 0 0 rgba(0,113,227,.18)}70%{box-shadow:0 0 0 22px rgba(0,113,227,0)}100%{box-shadow:0 0 0 0 rgba(0,113,227,0)}}
-@keyframes shimmer{0%{transform:translateX(0)}100%{transform:translateX(560%)}}
-@keyframes flowArrow{0%,100%{transform:translateX(0);opacity:.55}50%{transform:translateX(6px);opacity:1}}
-@keyframes packet{0%{transform:translateX(0);opacity:0}7%{opacity:1}46%{transform:translateX(calc(50vw - 430px));opacity:1}50%{transform:translateX(calc(50vw - 430px)) scale(1.02)}52%{transform:translateX(calc(50vw - 430px)) scale(1)}93%{transform:translateX(calc(100vw - 640px));opacity:1}100%{transform:translateX(calc(100vw - 640px));opacity:0}}
-@keyframes pulseGlow{0%,100%{transform:scale(.9);opacity:.65}50%{transform:scale(1.16);opacity:1}}
-
-@media(max-width:940px){
-  .slide{padding:6vh 5vw 10vh}
-  .cover-inner{width:62%}
-  .phone-scene{right:1%;width:39%}
-  .stores,.facts-grid,.cost-cards,.compare,.two-pillars,.demo-wrap,.interview{grid-template-columns:1fr 1fr}
-  .stores{grid-template-columns:1fr 1fr 1fr}
-}
-@media(max-width:600px){
-  .slide{justify-content:flex-start;overflow:auto;padding:54px 18px 80px}
-  .slide h2{font-size:34px;margin-bottom:22px}
-  .cover-inner{width:100%}.cover h1{font-size:60px}.cover .lead{font-size:22px}
-  .phone-scene{opacity:.1;width:80%;right:-22%}
-  .stats-grid,.compare,.stores,.facts-grid,.cost-cards,.timeline,.interview,.loop,.secure-grid,.two-pillars,.takeaway{grid-template-columns:1fr !important;display:grid}
-  .loop{display:grid}.loop-arrow,.arrow,.secure-arrow{display:none}
-  .matrix{overflow:auto}.matrix table{min-width:650px}
-  .stores{grid-template-columns:1fr 1fr}.facts-grid{grid-template-columns:1fr 1fr}
-  .token-scene{height:540px;padding:24px}.n1{left:20px;top:200px}.n2{left:calc(50% - 90px);top:40px}.n3{right:20px;top:200px}.token-track{left:110px;right:110px;top:255px}.packet{top:236px;left:110px}.packet.alt{top:274px}
-  .kbdhint{display:none}
-}
-@media print{
-  @page{size:13.333in 7.5in;margin:0}
-  html,body{background:#fff !important;print-color-adjust:exact;-webkit-print-color-adjust:exact}
-  .deck{display:block;width:13.333in !important;height:auto !important;overflow:visible !important}
-  .slide{position:relative !important;width:13.333in !important;height:7.5in !important;min-height:7.5in !important;max-height:7.5in !important;opacity:1 !important;transform:none !important;pointer-events:auto !important;page-break-after:always !important;break-after:page !important;padding:52px 80px 48px !important;overflow:hidden !important;display:flex !important}
-  .cover h1{font-size:98px !important}.cover-inner{width:60%}.cover .mini{margin-top:40px}
-  .iphone,.orb{animation:none !important}
-  .token-scene{height:330px !important}.packet{animation:none !important;opacity:1 !important;transform:translateX(0) !important}
-  .bar-fill,.rule i{width:var(--target) !important}
-  .slide .slidebody>*{animation:none !important}
-  .chrome,.kbdhint,.topline{display:none !important}
-}
-</style></head><body><div class="deck" id="deck">
-<section class="slide cover" data-title="當手機變成錢包">
-  <div class="cover-inner">
-    <div class="eyebrow">Mobile Payment / 2026</div>
-    <h1>當手機<br>變成<span>錢包。</span></h1>
-    <div class="lead">行動支付、點數經濟、Apple Pay 安全機制</div>
-    <div class="mini">輔大生活圈 · 線上資料整理</div>
-  </div>
-  <div class="phone-scene" aria-hidden="true">
-    <div class="orb"></div>
-    <div class="iphone">
-      <div class="island"></div>
-      <div class="wallet-top">Wallet <span>●●●</span></div>
-      <div class="bank-card"><div>Debit</div><div class="digits">•••• 9086</div><div class="chip">▦</div></div>
-      <div class="tap-ring"></div>
-      <div class="ready">靠近讀卡機即可付款</div>
-    </div>
-  </div>
-</section>
-
-<section class="slide" data-title="小額支付變了">
-  <div class="slidebody">
-    <div class="eyebrow">01 / Consumer Shift</div>
-    <h2>50 元以下，手機支付已超過現金。</h2>
-    <div class="stats-grid">
-      <div class="metric">
-        <div class="metric-name">行動支付</div>
-        <div class="metric-num blue"><span class="count" data-target="46">0</span><span>%</span></div>
-        <div class="bar"><div class="bar-fill blue animate-bar" data-target="46%"></div></div>
-      </div>
-      <div class="metric">
-        <div class="metric-name">現金</div>
-        <div class="metric-num"><span class="count" data-target="42">0</span><span>%</span></div>
-        <div class="bar"><div class="bar-fill gray animate-bar" data-target="42%"></div></div>
-      </div>
-    </div>
-    <div class="bottom-big">結帳這件事，已經開始改變消費習慣。</div>
-  </div>
-</section>
-
-<section class="slide" data-title="兩種路線">
-  <div class="slidebody">
-    <div class="eyebrow">02 / Two Routes</div>
-    <h2>LINE Pay 跟 Apple Pay，做的是不同的事。</h2>
-    <div class="compare">
-      <article class="card">
-        <div class="badge">▦</div>
-        <div class="cap">LINE Pay</div>
-        <h3>掃碼付款</h3>
-        <p>打開 App、掃碼或出示條碼。<br>重點在平台活動、點數、回饋。</p>
-        <div class="chipline">回饋感很強</div>
-      </article>
-      <article class="card">
-        <div class="badge">◎</div>
-        <div class="cap">Apple Pay</div>
-        <h3>感應付款</h3>
-        <p>Face ID 或 Touch ID 驗證後，直接靠近刷卡機。<br>重點在信用卡數位化與安全驗證。</p>
-        <div class="chipline">流程更短</div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<section class="slide" data-title="生活圈樣本">
-  <div class="slidebody">
-    <div class="eyebrow">03 / Store Sample</div>
-    <h2>用五種常見店型來看。</h2>
-    <div class="stores">
-      <div class="store"><b>01</b><strong>7‑ELEVEN</strong><small>便利商店</small></div>
-      <div class="store"><b>02</b><strong>摩斯漢堡</strong><small>早餐 / 速食</small></div>
-      <div class="store"><b>03</b><strong>路易莎</strong><small>咖啡 / 飲品</small></div>
-      <div class="store"><b>04</b><strong>麥當勞</strong><small>連鎖餐飲</small></div>
-      <div class="store"><b>05</b><strong>神威影印</strong><small>影印 / 列印</small></div>
-    </div>
-    <div class="kicker">看的是：支付方式、成本、店家採用邏輯。</div>
-  </div>
-</section>
-
-<section class="slide" data-title="支付矩陣">
-  <div class="slidebody">
-    <div class="eyebrow">04 / Matrix</div>
-    <h2>五類店家，支付方式差很多。</h2>
-    <div class="matrix">
-      <table>
-        <thead>
-          <tr><th>店家</th><th>LINE Pay</th><th>街口</th><th>悠遊卡</th><th>信用卡</th><th>現金</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>7‑ELEVEN</td><td class="yes">✓</td><td class="maybe">?</td><td class="yes">✓</td><td class="yes">✓</td><td class="cashonly">✓</td></tr>
-          <tr><td>摩斯漢堡</td><td class="yes">✓</td><td class="maybe">?</td><td class="yes">✓</td><td class="yes">✓</td><td class="cashonly">✓</td></tr>
-          <tr><td>路易莎</td><td class="yes">✓</td><td class="maybe">?</td><td class="maybe">?</td><td class="yes">✓</td><td class="cashonly">✓</td></tr>
-          <tr><td>麥當勞</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="cashonly">✓</td></tr>
-          <tr><td>神威影印</td><td class="maybe">?</td><td class="maybe">?</td><td class="maybe">?</td><td class="maybe">?</td><td class="cashonly">✓</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="kicker">連鎖通路資訊完整，獨立小店通常比較難從網路直接查清楚。</div>
-  </div>
-</section>
-
-<section class="slide" data-title="幾個事實">
-  <div class="slidebody">
-    <div class="eyebrow">05 / Quick Facts</div>
-    <h2>店家在意的，不只是能不能收。</h2>
-    <div class="facts-grid">
-      <div class="fact"><div class="small">Fee</div><strong>LINE Pay 3%</strong><p>直接申請方案示意，會影響每一筆收入。</p></div>
-      <div class="fact"><div class="small">Fee</div><strong>街口 2.5%</strong><p>費率低一點，但還是要看店家規模與方案。</p></div>
-      <div class="fact"><div class="small">Cash Flow</div><strong>不是立刻入帳</strong><p>交易成功，不代表錢馬上可以用。</p></div>
-      <div class="fact"><div class="small">Loyalty</div><strong>回饋把人留下來</strong><p>支付平台真正搶的，是下一次消費。</p></div>
-    </div>
-  </div>
-</section>
-
-<section class="slide" data-title="一筆100元">
-  <div class="slidebody">
-    <div class="eyebrow">06 / Merchant Economics</div>
-    <h2>同樣收 100 元，店家拿回來的不一樣。</h2>
-    <div class="cost-cards">
-      <div class="cost highlight">
-        <div class="tag">現金</div>
-        <div class="money">100<span>.00</span></div>
-        <div class="rule blue"><i class="animate-rule" data-target="100%"></i></div>
-        <p>沒有平台費率。<br>但仍有找零、盤點與保管成本。</p>
-      </div>
-      <div class="cost">
-        <div class="tag">LINE Pay</div>
-        <div class="money">97<span>.00</span></div>
-        <div class="rule gray"><i class="animate-rule" data-target="97%"></i></div>
-        <p>示意費率 3%。<br>對毛利低的小店，差很多。</p>
-      </div>
-      <div class="cost">
-        <div class="tag">街口支付</div>
-        <div class="money">97.5<span>0</span></div>
-        <div class="rule gray"><i class="animate-rule" data-target="97.5%"></i></div>
-        <p>費率稍低。<br>但還是要面對現金流與對帳問題。</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="slide" data-title="入帳節奏">
-  <div class="slidebody">
-    <div class="eyebrow">07 / Cash Flow</div>
-    <h2>收款成功，不等於今天就能拿去進貨。</h2>
-    <div class="timeline">
-      <div class="time-card"><div class="when">Step 1</div><strong>顧客付款</strong><p>店家先收到交易成功通知。</p></div>
-      <div class="arrow">→</div>
-      <div class="time-card"><div class="when">Step 2</div><strong>平台結算</strong><p>進行對帳、請款與費率處理。</p></div>
-      <div class="arrow">→</div>
-      <div class="time-card"><div class="when">Step 3</div><strong>再撥款</strong><p>像 LINE Pay 公開方案，常見約 2 個工作天。</p></div>
-    </div>
-    <div class="kicker">對大店只是流程，對小店可能就是壓力。</div>
-  </div>
-</section>
-
-<section class="slide" data-title="店家怎麼看">
-  <div class="slidebody">
-    <div class="eyebrow">08 / Merchant Voice</div>
-    <h2>真實店家最在意的是方便，還有算不算得過來。</h2>
-    <div class="interview">
-      <div class="quote-card">
-        <div class="quote-cap">公開採訪整理</div>
-        <div class="name">林秋雲</div>
-        <div class="role">寧夏夜市 潤餅店老闆娘</div>
-        <div class="quote">「忙著做餐，不用一邊碰錢，真的比較方便。」</div>
-      </div>
-      <div class="interview-points">
-        <div class="ip"><b>01</b><div><strong>省空間</strong><p>同一個 QR Code 可以整合多種支付方式，不必放很多設備。</p></div></div>
-        <div class="ip"><b>02</b><div><strong>省動作</strong><p>顧客自己掃碼，店家不用同時顧找零跟製餐。</p></div></div>
-        <div class="ip"><b>03</b><div><strong>看現金流</strong><p>不同平台撥款時間不一，這會直接影響小店的感受。</p></div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="slide" data-title="點數經濟">
-  <div class="slidebody">
-    <div class="eyebrow">09 / Loyalty</div>
-    <h2>回饋不是送禮，是把你留在同一個 App 裡。</h2>
-    <div class="loop">
-      <div class="loop-item"><div class="loop-num">01</div><strong>付款</strong><p>先解決結帳這件事。</p></div>
-      <div class="loop-arrow">→</div>
-      <div class="loop-item"><div class="loop-num">02</div><strong>給回饋</strong><p>點數、折價券、會員權益開始累積。</p></div>
-      <div class="loop-arrow">→</div>
-      <div class="loop-item"><div class="loop-num">03</div><strong>再回來</strong><p>下一次買東西，又更想打開同一個平台。</p></div>
-    </div>
-    <div class="understatement">平台真正搶的，<br><strong>不是一次付款，而是下次還會不會再來。</strong></div>
-  </div>
-</section>
-
-<section class="slide" data-title="Apple Pay 安全">
-  <div class="slidebody">
-    <div class="eyebrow">10 / Apple Pay</div>
-    <h2>Apple Pay 不把真實卡號直接交給店家。</h2>
-    <div class="secure-grid">
-      <div class="secure-step">
-        <div class="cap">Original Card</div>
-        <strong>真實卡號</strong>
-        <p>先由銀行與支付網路核驗。</p>
-      </div>
-      <div class="secure-arrow">→</div>
-      <div class="secure-step active">
-        <div class="cap">Token</div>
-        <strong>裝置代碼</strong>
-        <p>把卡片變成裝置可用的代碼。</p>
-      </div>
-      <div class="secure-arrow">→</div>
-      <div class="secure-step">
-        <div class="cap">Dynamic Security</div>
-        <strong>動態驗證</strong>
-        <p>每筆交易再帶一層安全資訊。</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="slide" data-title="代碼化動畫">
-  <div class="slidebody">
-    <div class="eyebrow">11 / Token Animation</div>
-    <h2>刷卡機看到的，是代碼，不是你的原卡號。</h2>
-    <div class="token-scene">
-      <div class="token-track"></div>
-      <div class="node n1"><div class="node-icon"></div><b>iPhone</b><span>先在裝置上完成驗證</span></div>
-      <div class="node n2"><div class="node-icon">✦</div><b>Token</b><span>把卡號換成裝置專屬代碼</span></div>
-      <div class="node n3"><div class="node-icon">▦</div><b>刷卡機</b><span>收到代碼與動態驗證資訊</span></div>
-      <div class="spark"></div>
-      <div class="packet">TOKEN</div>
-      <div class="packet alt">CODE</div>
-    </div>
-    <div class="token-caption"><span><strong>真實卡號</strong> 不直接外露</span><span><strong>每筆交易</strong> 也都不是同一段資料</span></div>
-  </div>
-</section>
-
-<section class="slide" data-title="為什麼還收現金">
-  <div class="slidebody">
-    <div class="eyebrow">12 / Management View</div>
-    <h2>很多小吃店還是收現金，未必是落後。</h2>
-    <div class="two-pillars">
-      <div class="pillar">
-        <span>收行動支付</span>
-        <h3>顧客會覺得更方便</h3>
-        <p>少找零、對帳比較整齊，也能接會員和回饋活動。</p>
-      </div>
-      <div class="pillar">
-        <span>繼續收現金</span>
-        <h3>店家也有現實成本</h3>
-        <p>手續費、撥款等待、操作習慣、甚至營業透明度，都是考量。</p>
-      </div>
-    </div>
-    <div class="answer-strip">資管角度來看，<br><strong>好的支付系統，要同時讓顧客方便，也讓店家算得過來。</strong></div>
-  </div>
-</section>
-
-<section class="slide" data-title="重點整理">
-  <div class="slidebody">
-    <div class="eyebrow">13 / Takeaways</div>
-    <h2>行動支付改變的，不只是付款而已。</h2>
-    <div class="takeaway">
-      <div class="item"><b>01</b><div><strong>消費習慣</strong><p>小額交易越來越常直接用手機完成。</p></div></div>
-      <div class="item"><b>02</b><div><strong>店家成本</strong><p>費率與撥款速度，會左右採用意願。</p></div></div>
-      <div class="item"><b>03</b><div><strong>平台護城河</strong><p>點數、回饋、會員資料，把交易變成關係。</p></div></div>
-      <div class="item"><b>04</b><div><strong>資料安全</strong><p>Tokenization 讓真實卡號不必直接暴露。</p></div></div>
-    </div>
-    <div class="closing">看起來只是更快結帳，<br><strong>背後其實是金流、會員、資料與安全的整套設計。</strong></div>
-  </div>
-</section>
-</div><div class="topline" id="progress"></div><div class="kbdhint">← → 切換　・　F 全螢幕　・　P 列印 PDF</div><div class="chrome"><span class="counter" id="counter">01 / 13</span><button id="prev" title="上一頁">‹</button><button id="next" title="下一頁">›</button><button id="full" title="全螢幕">⛶</button></div><script>
-const slides=[...document.querySelectorAll('.slide')];
-let idx=0,startX=0;
-function animateCounters(scope){
-  scope.querySelectorAll('.count').forEach(el=>{
-    const target=Number(el.dataset.target||0);
-    cancelAnimationFrame(el._raf||0);
-    const start=performance.now();
-    const dur=1100;
-    function tick(now){
-      const p=Math.min(1,(now-start)/dur);
-      const eased=1-Math.pow(1-p,3);
-      el.textContent=Math.round(target*eased);
-      if(p<1) el._raf=requestAnimationFrame(tick);
-    }
-    el.textContent='0';
-    el._raf=requestAnimationFrame(tick);
-  });
-}
-function resetAnimatedBars(scope){
-  scope.querySelectorAll('.animate-bar,.animate-rule').forEach(el=>{
-    el.style.width='0';
-    void el.offsetWidth;
-    requestAnimationFrame(()=>{el.style.width=el.dataset.target||'0'});
-  });
-}
-function show(n){
-  idx=(n+slides.length)%slides.length;
-  slides.forEach((s,i)=>s.classList.toggle('active',i===idx));
-  document.getElementById('counter').textContent=String(idx+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');
-  document.getElementById('progress').style.width=((idx+1)/slides.length*100)+'%';
-  document.title=slides[idx].dataset.title+' · 當手機變成錢包';
-  const active=slides[idx];
-  animateCounters(active);
-  resetAnimatedBars(active);
-}
-document.getElementById('prev').onclick=()=>show(idx-1);
-document.getElementById('next').onclick=()=>show(idx+1);
-document.getElementById('full').onclick=()=>document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen?.();
-document.addEventListener('keydown',e=>{
-  if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();show(idx+1)}
-  if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();show(idx-1)}
-  if(e.key.toLowerCase()==='f')document.getElementById('full').click();
-  if(e.key.toLowerCase()==='p')window.print();
-});
-document.addEventListener('touchstart',e=>{startX=e.changedTouches[0].screenX},{passive:true});
-document.addEventListener('touchend',e=>{const dx=e.changedTouches[0].screenX-startX;if(Math.abs(dx)>55)show(idx+(dx<0?1:-1))},{passive:true});
-show(0);
-</script></body></html>
+.inside{width:100%;position:relative;z-index:2}
+h2{font-size:clamp(41px,4vw,63px);line-height:1.19;letter-spacing:-.023em;font-weight:750;margin:0 0 46px}
+.cover{background:white;justify-content:space-between}
+.cover-left{width:59%;z-index:2;position:relative}
+h1{font-weight:760;font-size:clamp(71px,8.15vw,124px);line-height:1.23;letter-spacing:.004em;margin:0 0 27px}
+h1 span{color:var(--blue)}
+.cover-sub{font-size:clamp(23px,2.4vw,38px);font-weight:500;line-height:1.5;letter-spacing:0;margin:0;color:#333e4d}
+.cover-topic{font-size:clamp(18px,1.7vw,27px);color:#738093;letter-spacing:0;margin-top:30px}
+.cover-right{position:absolute;right:6.5%;top:7%;height:86%;width:34%;display:grid;place-items:center}
+.halo{position:absolute;inset:-12%;background:radial-gradient(ellipse at center,rgba(0,113,227,.13),rgba(0,113,227,.055) 35%,transparent 70%);animation:breath 5s ease-in-out infinite}
+.device{position:relative;height:min(650px,85%);aspect-ratio:9/18.3;border:11px solid #202730;border-radius:52px;background:#fcfdff;box-shadow:0 24px 66px rgba(28,48,75,.17);transform:rotate(7deg);animation:deviceFloat 5.4s ease-in-out infinite;padding:38px 24px}
+.pill{position:absolute;top:10px;width:36%;height:24px;left:32%;border-radius:14px;background:#202730}
+.device-head{font-size:17px;font-weight:650;display:flex;justify-content:space-between}.device-head b{font-size:12px}
+.debit{position:absolute;left:9%;right:9%;top:25%;height:35%;border-radius:22px;background:linear-gradient(140deg,#14233a,#3a4a62);padding:22px;color:#fff;box-shadow:0 16px 30px rgba(15,30,48,.18)}
+.debit span{font-size:18px}.debit strong{position:absolute;bottom:24px;left:22px;font-size:18px;letter-spacing:.08em}.debit i{position:absolute;right:22px;bottom:25px;font-size:25px;font-style:normal}
+.nfc-icon{position:absolute;top:67%;left:50%;width:72px;height:72px;transform:translate(-50%,-50%);border:3px solid #0071e3;border-radius:50%;display:grid;place-items:center;box-shadow:0 0 0 0 rgba(0,113,227,.2);animation:nfcPulse 2.3s ease-in-out infinite}
+.nfc-icon span{position:absolute;border:2px solid #0071e3;border-radius:50%;width:44px;height:44px}.nfc-icon span:nth-child(2){width:24px;height:24px}.nfc-icon span:nth-child(3){width:7px;height:7px;background:#0071e3}
+.ready{position:absolute;top:80%;text-align:center;left:0;right:0;color:#6c7787;font-size:17px}
+.two-stats{display:grid;grid-template-columns:1fr 1fr;gap:36px;max-width:1120px}
+.stat{background:var(--soft);border-radius:30px;padding:38px 44px 43px;min-height:358px}
+.stat-name{font-size:31px;font-weight:600;color:#505e71}
+.stat-value{font-size:clamp(100px,10vw,146px);letter-spacing:-.07em;line-height:1.2;font-weight:760;margin:12px 0 9px}
+.stat-value.blue{color:var(--blue)}.unit{font-size:.45em;letter-spacing:-.02em;margin-left:7px}
+.track{height:19px;background:#dce4ed;border-radius:99px;overflow:hidden}
+.fill,.fee-fill{position:relative;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#61b0ff 0%,#0071e3 57%,#76c4ff 100%);box-shadow:0 0 20px #0071e355;transition:width 1.4s cubic-bezier(.15,.8,.25,1)}
+.fill.slate{background:linear-gradient(90deg,#b8c5d4,#778ba3,#b8c5d4)}
+.fill:after,.fee-fill:after{content:"";position:absolute;top:0;bottom:0;left:-28%;width:30%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.85),transparent);animation:shimmer 1.8s linear infinite}
+.year-note{margin-top:26px;font-size:23px;color:#5f6a7b}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:30px;max-width:1180px}
+.feature{min-height:420px;background:var(--soft);border-radius:29px;padding:36px 40px;display:flex;flex-direction:column}
+.feature-icon{height:90px;display:flex;align-items:start}.qr-svg{flex:none}
+.feature-name{font-size:24px;color:var(--blue);font-weight:750;margin:7px 0 8px}
+.feature h3{font-size:45px;line-height:1.2;letter-spacing:-.02em;margin:0 0 16px}
+.feature-line{font-size:28px;color:#49586c;line-height:1.5}
+.feature-em{font-size:26px;color:var(--blue);font-weight:620;margin-top:auto;padding-top:24px}
+.five-stores{display:grid;grid-template-columns:repeat(3,1fr);gap:25px;max-width:1130px}
+.store{background:var(--soft);border-radius:24px;min-height:180px;padding:32px;display:flex;flex-direction:column;justify-content:center;gap:16px}
+.store span{font-size:23px;color:#647084}.store b{font-size:34px;letter-spacing:-.025em;line-height:1.2}
+.table-wrap{border:1px solid #e2e8f0;border-radius:24px;overflow:hidden;max-width:1190px;background:#fff}
+.paymatrix{width:100%;border-collapse:collapse;table-layout:fixed}
+.paymatrix th,.paymatrix td{text-align:center;padding:16px 10px}
+.paymatrix th{background:#f4f7fa;font-size:23px;color:#56667b;white-space:nowrap;font-weight:620}
+.paymatrix th:first-child,.paymatrix td:first-child{text-align:left;padding-left:28px;width:26%}
+.paymatrix td{border-top:1px solid #e7ebf1;font-size:32px;font-weight:700;height:77px}
+.paymatrix td:first-child{font-size:25px;color:#111b28}.hit{color:var(--blue)}.unk,.nil{color:#b0b9c5}
+.matrix-note{font-size:22px;color:#637083;margin-top:20px}
+.fee-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:25px;max-width:1160px}
+.fee-card{background:var(--soft);border-radius:27px;min-height:340px;padding:34px 32px}
+.fee-card.active{background:#eaf4ff}
+.fee-label{font-size:29px;font-weight:700}
+.fee-amount{font-size:104px;font-weight:760;letter-spacing:-.075em;line-height:1.13;margin:18px 0 17px;color:#111b2a}
+.fee-card.active .fee-amount{color:var(--blue)}.fee-amount small{font-size:.32em;letter-spacing:0;margin-left:8px;color:#657286}
+.fee-track{height:15px;border-radius:20px;background:#dbe5f0;overflow:hidden}
+.fee-fill{display:block;background:linear-gradient(90deg,#8bcaff,#0071e3,#99d3ff)}
+.fee-card p{font-size:26px;color:#566377;line-height:1.4;margin:23px 0 0}
+.settlement{display:grid;grid-template-columns:1fr 55px 1fr 55px 1fr;gap:12px;max-width:1180px;align-items:center}
+.stage{height:280px;min-width:0;padding:35px 29px;border-radius:26px;background:var(--soft);display:flex;flex-direction:column;justify-content:center}
+.stage.blue{background:#eaf4ff}.stage-number{font-size:20px;color:#0071e3;font-weight:760;margin-bottom:17px}
+.stage b{font-size:34px;line-height:1.25;letter-spacing:-.025em}.stage p{font-size:24px;color:#5b687a;margin:15px 0 0}
+.join{height:5px;background:#d5e6fa;border-radius:8px;overflow:visible;position:relative}
+.join span{position:absolute;left:0;width:26px;height:5px;border-radius:5px;background:#0071e3;animation:lineFlow 2.0s linear infinite}
+.voice-layout{display:grid;grid-template-columns:45% 1fr;gap:42px;max-width:1200px;align-items:center}
+.voice-primary{background:#eaf4ff;border-radius:28px;padding:34px 39px;min-height:395px}
+.voice-cap{font-size:24px;color:var(--blue);font-weight:650}.voice-name{font-size:54px;font-weight:770;line-height:1.17;margin-top:27px}
+.voice-desc{font-size:25px;color:#667589;margin-top:7px}
+.voice-primary p{font-size:30px;line-height:1.55;margin:36px 0 0;letter-spacing:0}
+.voice-points>div{display:grid;grid-template-columns:145px 1fr;align-items:start;gap:17px;padding:23px 0;border-bottom:1px solid var(--line)}
+.voice-points b{font-size:30px;color:#0071e3}.voice-points span{font-size:26px;line-height:1.48;color:#48586b}
+.rewards{display:grid;grid-template-columns:1fr 50px 1fr 50px 1fr;align-items:center;gap:13px;max-width:1160px}
+.reward{background:var(--soft);border-radius:27px;padding:34px;min-height:275px;display:flex;flex-direction:column;justify-content:center}
+.reward span{font-size:21px;color:#0071e3;font-weight:760;margin-bottom:28px}
+.reward b{font-size:43px;letter-spacing:-.02em}.reward p{font-size:28px;color:#5d687b;margin:12px 0 0}
+.reward-arrow{font-size:40px;color:#0071e3;animation:arrowPulse 1.7s ease-in-out infinite}
+.reward-takeaway{font-size:35px;margin-top:35px;font-weight:630;color:#4e5b6e;line-height:1.5}
+.token-visual{display:grid;grid-template-columns:1fr 122px 1fr 122px 1fr;gap:6px;max-width:1150px;align-items:center;margin-top:18px}
+.token-node{min-height:325px;border:1px solid #e5e9ef;border-radius:30px;background:#fafbfd;padding:29px 16px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;transition:box-shadow .4s,border-color .4s}
+.token-node.center-node{background:#eaf4ff;border-color:#cee6ff}
+.node-picto{height:127px;display:grid;place-items:center;width:100%}
+.n-phone{height:118px;width:62px;border:6px solid #1b2737;background:white;border-radius:18px;position:relative}
+.n-phone i{position:absolute;top:5px;left:18px;width:20px;height:5px;border-radius:7px;background:#1b2737}
+.n-phone b{position:absolute;top:44px;left:2px;right:2px;font-size:9px;letter-spacing:.01em;color:#0071e3}
+.token-core{display:grid;place-items:center;width:108px;height:108px;border-radius:32px;background:#0071e3;color:white;font-size:52px;font-weight:700;box-shadow:0 8px 26px #0071e328;animation:tokenPulse 2.6s ease-in-out infinite}
+.n-terminal{width:111px;height:95px;border:7px solid #1e2c3e;border-radius:20px;background:white;display:grid;place-items:center}
+.n-terminal i{font-style:normal;color:#0071e3;font-size:52px}
+.token-node>b{font-size:38px;line-height:1.2;margin-top:8px}
+.token-node>span{font-size:24px;line-height:1.4;color:#5f6e80;margin-top:12px}
+.token-connector{height:5px;background:#d8e8f8;position:relative;border-radius:10px;overflow:hidden}
+.token-light{position:absolute;width:54px;left:-54px;top:0;bottom:0;background:linear-gradient(90deg,transparent,#0071e3,#9cd7ff);border-radius:10px;animation:lightTravel 2.6s ease-in-out infinite}
+.token-light.second{animation-delay:1.25s}
+.token-answer{font-size:36px;font-weight:700;margin-top:30px;color:#0071e3}
+.cash-vs-digital{display:grid;grid-template-columns:1fr 1fr;gap:26px;max-width:1160px}
+.choice{background:var(--soft);min-height:320px;padding:38px 40px;border-radius:28px}
+.choice h3{font-size:24px;color:#0071e3;margin:0 0 23px}.choice-big{font-size:46px;line-height:1.2;font-weight:700;letter-spacing:-.02em}
+.choice p{font-size:29px;line-height:1.55;color:#4e5f72;margin:23px 0 0}
+.cash-sum{font-size:33px;line-height:1.5;margin-top:27px;color:#334458;font-weight:620}
+.final-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:1130px}
+.final-card{border-top:3px solid #c9d6e5;padding:21px 12px 10px;display:grid;grid-template-columns:150px 1fr;column-gap:12px}
+.final-card b{color:var(--blue);font-size:23px;line-height:1.3}
+.final-card strong{font-size:32px;line-height:1.3}.final-card span{grid-column:2;color:#617082;font-size:26px;margin-top:11px;line-height:1.4}
+.chrome{position:fixed;bottom:15px;right:22px;display:flex;align-items:center;gap:8px;z-index:30}
+.chrome span{font-size:14px;color:#9ba6b5;min-width:65px;text-align:center}.chrome button{font-size:24px;border:0;border-radius:100%;width:43px;height:43px;background:#f0f4f8;color:#334459;cursor:pointer}
+.topprogress{position:fixed;left:0;top:0;height:4px;background:var(--blue);z-index:20;transition:width .45s}
+.slide.active .inside>*{animation:arrive .55s ease both}.slide.active .inside>*:nth-child(2){animation-delay:.07s}
+@keyframes arrive{from{transform:translateY(9px);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes shimmer{0%{transform:translateX(0)}100%{transform:translateX(460%)}}
+@keyframes lineFlow{0%{transform:translateX(0)}100%{transform:translateX(30px)}}
+@keyframes lightTravel{0%{transform:translateX(0);opacity:0}15%{opacity:1}75%{opacity:1}100%{transform:translateX(180px);opacity:0}}
+@keyframes tokenPulse{0%,100%{transform:scale(.95);box-shadow:0 8px 20px #0071e322}50%{transform:scale(1.04);box-shadow:0 8px 33px #0071e34a}}
+@keyframes arrowPulse{0%,100%{opacity:.55;transform:translateX(0)}50%{opacity:1;transform:translateX(6px)}}
+@keyframes deviceFloat{0%,100%{transform:translateY(0) rotate(7deg)}50%{transform:translateY(-14px) rotate(6deg)}}
+@keyframes breath{0%,100%{transform:scale(.95);opacity:.75}50%{transform:scale(1.05);opacity:1}}
+@keyframes nfcPulse{0%,100%{box-shadow:0 0 0 0 #0071e330}70%{box-shadow:0 0 0 18px #0071e300}}
+@media(max-width:900px){.slide{padding:6vh 5vw}.cover-left{width:65%}.cover-right{width:40%;right:1%}h2{font-size:clamp(33px,5vw,52px)}.stat{padding:23px}.stat-value{font-size:78px}.compare,.voice-layout,.cash-vs-digital{gap:15px}.feature{padding:20px}.feature h3{font-size:34px}.feature-line{font-size:20px}.feature-em{font-size:18px}.paymatrix th{font-size:13px}.paymatrix td{font-size:19px}.paymatrix td:first-child{font-size:14px}.fee-amount{font-size:70px}.reward b{font-size:28px}.reward p{font-size:17px}.voice-points b{font-size:21px}.voice-points span{font-size:17px}}
+@media(max-width:580px){.slide{justify-content:flex-start;align-items:start;overflow:auto;padding:60px 18px 92px}.cover{justify-content:center}.cover-left{width:100%}.cover h1{font-size:59px}.cover-right{width:80%;right:-24%;opacity:.12}.cover-sub{font-size:20px}.cover-topic{font-size:15px}h2{font-size:33px;margin-bottom:25px}.two-stats,.compare,.five-stores,.fee-grid,.voice-layout,.cash-vs-digital,.final-grid{grid-template-columns:1fr}.two-stats{gap:12px}.stat{min-height:0;padding:20px}.stat-value{font-size:55px}.track{height:14px}.feature{min-height:0}.feature-icon{height:80px}.feature h3{font-size:30px}.feature-line{font-size:20px}.feature-em{font-size:17px}.five-stores{grid-template-columns:1fr 1fr}.store{min-height:110px;padding:12px}.store b{font-size:18px}.store span{font-size:13px}.table-wrap{overflow:auto}.paymatrix{min-width:700px}.fee-card{min-height:0}.fee-amount{font-size:60px}.settlement{grid-template-columns:1fr;gap:8px}.stage{height:auto}.join{display:none}.voice-primary{min-height:0}.voice-name{font-size:38px}.voice-primary p{font-size:21px}.voice-points b{font-size:22px}.voice-points span{font-size:18px}.rewards{grid-template-columns:1fr;gap:8px}.reward-arrow{display:none}.reward{min-height:0}.token-visual{grid-template-columns:1fr;gap:5px}.token-connector{height:16px;width:5px;margin:0 auto}.token-node{min-height:175px;padding:10px}.node-picto{height:90px}.token-answer{font-size:24px}.final-card{grid-template-columns:88px 1fr}.final-card strong{font-size:20px}.final-card span{font-size:16px}}
+@media print{@page{size:13.333in 7.5in;margin:0}html,body{width:13.333in!important;background:#fff!important;print-color-adjust:exact;-webkit-print-color-adjust:exact}.deck{position:relative!important;width:13.333in!important;height:auto!important;overflow:visible!important;display:block!important}.slide{position:relative!important;inset:auto!important;width:13.333in!important;height:7.5in!important;min-height:7.5in!important;max-height:7.5in!important;page-break-after:always!important;break-after:page!important;padding:50px 80px!important;transform:none!important;opacity:1!important;pointer-events:auto!important;overflow:hidden!important;align-items:center!important}.slide .inside>*{animation:none!important}.cover h1{font-size:100px!important}.device,.halo,.nfc-icon,.token-core,.token-light,.reward-arrow,.join span{animation:none!important}.token-light{opacity:.4!important;transform:translateX(100px)!important}.countup{font-variant-numeric:tabular-nums}.chrome,.topprogress{display:none!important}h2{font-size:52px!important;margin-bottom:32px!important}.stat{min-height:0;padding:26px 34px}.stat-value{font-size:112px!important}.feature{min-height:350px;padding:26px 33px}.feature-icon{height:70px}.feature-icon svg{width:70px;height:70px}.feature h3{font-size:35px}.feature-line{font-size:21px}.feature-em{font-size:20px}.store{min-height:135px;padding:24px}.store b{font-size:27px}.store span{font-size:19px}.paymatrix td{height:59px;padding:10px}.paymatrix th{font-size:20px;padding:13px 8px}.paymatrix td:first-child{font-size:22px}.matrix-note{font-size:20px}.fee-card{min-height:285px;padding:25px}.fee-amount{font-size:85px}.fee-card p{font-size:21px}.stage{height:250px}.voice-primary{min-height:330px;padding:27px}.voice-name{font-size:48px}.voice-primary p{font-size:26px;margin-top:22px}.voice-points b{font-size:25px}.voice-points span{font-size:21px}.voice-points>div{padding:17px 0}.reward{min-height:215px;padding:26px}.reward b{font-size:36px}.reward p{font-size:23px}.reward-takeaway{font-size:29px}.token-node{min-height:265px}.node-picto{height:105px}.token-node>b{font-size:34px}.token-node>span{font-size:22px}.token-answer{font-size:31px}.choice{min-height:250px}.choice-big{font-size:40px}.choice p{font-size:24px}.cash-sum{font-size:29px}.final-card strong{font-size:28px}.final-card span{font-size:22px}}
+</style><style>
+.group-id{font-size:clamp(23px,2vw,31px);color:#697688;margin:30px 0 0;font-weight:560}
+.store-photo-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;max-width:1160px}
+.photo-card{border-radius:22px;background:#f4f7fb;overflow:hidden;text-decoration:none;color:inherit;min-width:0;display:block;box-shadow:0 4px 18px rgba(30,58,90,.04);transition:transform .35s,box-shadow .35s}
+.photo-card:hover{transform:translateY(-6px);box-shadow:0 14px 32px rgba(30,58,90,.13)}
+.photo-area{height:155px;position:relative;background:linear-gradient(130deg,#dfeaf9,#f5f8fc);overflow:hidden}
+.photo-area img{position:absolute;width:100%;height:100%;object-fit:cover;inset:0;z-index:2}
+.photo-fallback{height:100%;display:grid;place-items:center;font-weight:650;font-size:28px;color:#7195c4}
+.photo-copy{padding:12px 20px 15px;display:flex;align-items:center;gap:14px;justify-content:space-between}
+.photo-copy span{font-size:19px;color:#667588}.photo-copy strong{font-size:25px;letter-spacing:-.025em}
+.photo-disclaimer{margin-top:18px;font-size:20px;color:#5b6a7b;line-height:1.35}
+.team-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px 34px;max-width:1120px}
+.member{border-bottom:1px solid #dfe6ee;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 5px}
+.member strong{font-size:33px;font-weight:700}.member span{font-size:24px;color:#7a8797;font-variant-numeric:tabular-nums}
+@media (max-width:800px){.store-photo-grid{grid-template-columns:1fr 1fr}.photo-area{height:135px}.photo-copy span{font-size:15px}.photo-copy strong{font-size:20px}.team-grid{grid-template-columns:1fr}.member strong{font-size:24px}.member span{font-size:18px}}
+@media print{.store-photo-grid{grid-template-columns:repeat(3,1fr);gap:15px}.photo-area{height:142px}.photo-area img{display:none!important}.photo-fallback{display:grid}.photo-card{border:1px solid #e3eaf2}.photo-copy{padding:10px 15px}.photo-copy span{font-size:17px}.photo-copy strong{font-size:24px}.photo-disclaimer{font-size:17px}.team-grid{grid-template-columns:repeat(2,1fr)}.member{padding:13px 5px}.member strong{font-size:31px}.member span{font-size:23px}}
+</style></head><body><div class="deck"><section class="slide cover" data-title="當手機變成錢包"><div class="cover-left"><h1>當手機<br/>變成<span>錢包</span></h1><p class="cover-sub">行動支付與無現金社會的商業秘密</p><p class="cover-topic">LINE Pay ・ Apple Pay ・ Tokenization</p><p class="group-id">資管一乙　｜　第 10 組</p></div><div aria-hidden="true" class="cover-right"><div class="halo"></div><div class="device"><div class="pill"></div><div class="device-head">Wallet <b>●●●</b></div><div class="debit"><span>Debit</span><strong>•••• 9086</strong><i>◪</i></div><div class="nfc-icon"><span></span><span></span><span></span></div><div class="ready">感應付款</div></div></div></section><section class="slide" data-title="50 元以下，大家更常用手機付款"><div class="inside"><h2>50 元以下，大家更常用手機付款</h2>
+<div class="two-stats">
+<div class="stat"><div class="stat-name">行動支付</div><div class="stat-value blue"><span class="countup" data-goal="46">0</span><span class="unit">%</span></div><div class="track"><div class="fill blue" data-fill="46%"></div></div></div>
+<div class="stat"><div class="stat-name">現金</div><div class="stat-value"><span class="countup" data-goal="42">0</span><span class="unit">%</span></div><div class="track"><div class="fill slate" data-fill="42%"></div></div></div>
+</div>
+<div class="year-note">2025 年 MIC 消費者調查｜50 元以下的優先付款選擇</div>
+</div></section><section class="slide" data-title="兩種支付，差在哪裡？"><div class="inside"><h2>兩種支付，差在哪裡？</h2>
+<div class="compare">
+<div class="feature"><div class="feature-icon"><svg aria-hidden="true" class="qr-svg" height="84" viewbox="0 0 84 84" width="84"><rect fill="#e6f2ff" height="84" rx="12" width="84"></rect><g fill="#0071e3"><path d="M16 16h19v19H16zm4 4v11h11V20zM49 16h19v19H49zm4 4v11h11V20zM16 49h19v19H16zm4 4v11h11V53z" fill-rule="evenodd"></path><rect height="7" width="7" x="40" y="40"></rect><rect height="7" width="7" x="52" y="40"></rect><rect height="7" width="5" x="64" y="40"></rect><rect height="7" width="7" x="40" y="52"></rect><rect height="7" width="7" x="52" y="52"></rect><rect height="7" width="5" x="64" y="52"></rect><rect height="5" width="7" x="40" y="64"></rect><rect height="5" width="7" x="52" y="64"></rect></g></svg></div><div class="feature-name">LINE Pay</div><h3>掃碼付款</h3><div class="feature-line">掃描 QR Code<br/>或出示付款條碼</div><div class="feature-em">平台優惠與點數回饋</div></div>
+<div class="feature"><div class="feature-icon"><svg aria-hidden="true" height="84" viewbox="0 0 84 84" width="84"><rect fill="#e6f2ff" height="84" rx="12" width="84"></rect><g fill="none" stroke="#0071e3" stroke-linecap="round" stroke-width="5"><path d="M31 29v26M43 23c12 10 12 28 0 38M54 15c22 17 22 37 0 54"></path></g></svg></div><div class="feature-name">Apple Pay</div><h3>感應付款</h3><div class="feature-line">裝置驗證後<br/>靠近感應式讀卡機</div><div class="feature-em">信用卡數位化與安全驗證</div></div>
+</div></div></section><section class="slide" data-title="從五種店型開始比較"><div class="inside"><h2>從五種店型開始比較</h2>
+<div class="store-photo-grid"><a class="photo-card" href="https://commons.wikimedia.org/wiki/File:7-Eleven_TMUE_Store_20130922.jpg" rel="noopener" target="_blank" title="7-ELEVEN：北市大門市（公開照片）">
+<div class="photo-area"><div aria-hidden="true" class="photo-fallback">7-ELEVEN</div><img alt="7-ELEVEN門市參考照片（北市大門市）" loading="eager" onerror="this.style.display='none'" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/7-Eleven_TMUE_Store_20130922.jpg/1280px-7-Eleven_TMUE_Store_20130922.jpg"/></div>
+<div class="photo-copy"><span>便利商店</span><strong>7-ELEVEN</strong></div></a><a class="photo-card" href="https://commons.wikimedia.org/wiki/File:Mos_Burger_Minquan_West_Road_Store,_Taipei_20150509.jpg" rel="noopener" target="_blank" title="摩斯漢堡：民權西路店（公開照片）">
+<div class="photo-area"><div aria-hidden="true" class="photo-fallback">摩斯漢堡</div><img alt="摩斯漢堡門市參考照片（民權西路店）" loading="eager" onerror="this.style.display='none'" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/1/10/Mos_Burger_Minquan_West_Road_Store%2C_Taipei_20150509.jpg/1280px-Mos_Burger_Minquan_West_Road_Store%2C_Taipei_20150509.jpg"/></div>
+<div class="photo-copy"><span>早餐 / 速食</span><strong>摩斯漢堡</strong></div></a><a class="photo-card" href="https://commons.wikimedia.org/wiki/File:NTU_Store,_Louisa_Coffee_20240922.jpg" rel="noopener" target="_blank" title="路易莎：台大門市（公開照片）">
+<div class="photo-area"><div aria-hidden="true" class="photo-fallback">路易莎</div><img alt="路易莎門市參考照片（台大門市）" loading="eager" onerror="this.style.display='none'" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/9/92/NTU_Store%2C_Louisa_Coffee_20240922.jpg/1280px-NTU_Store%2C_Louisa_Coffee_20240922.jpg"/></div>
+<div class="photo-copy"><span>咖啡 / 飲品</span><strong>路易莎</strong></div></a><a class="photo-card" href="https://commons.wikimedia.org/wiki/File:McDonald%27s_Taipei_Minsheng_Restaurant_and_5681-UT_20231209.jpg" rel="noopener" target="_blank" title="麥當勞：台北民生店（公開照片）">
+<div class="photo-area"><div aria-hidden="true" class="photo-fallback">麥當勞</div><img alt="麥當勞門市參考照片（台北民生店）" loading="eager" onerror="this.style.display='none'" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/McDonald%27s_Taipei_Minsheng_Restaurant_and_5681-UT_20231209.jpg/1280px-McDonald%27s_Taipei_Minsheng_Restaurant_and_5681-UT_20231209.jpg"/></div>
+<div class="photo-copy"><span>餐飲</span><strong>麥當勞</strong></div></a><a class="photo-card" href="https://commons.wikimedia.org/wiki/File:Photocopy_Shop,_SCU_Grand_Complex_20250209.jpg" rel="noopener" target="_blank" title="影印店：東吳大學影印店（公開照片）">
+<div class="photo-area"><div aria-hidden="true" class="photo-fallback">影印店</div><img alt="影印店門市參考照片（東吳大學影印店）" loading="eager" onerror="this.style.display='none'" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1f/Photocopy_Shop%2C_SCU_Grand_Complex_20250209.jpg/1280px-Photocopy_Shop%2C_SCU_Grand_Complex_20250209.jpg"/></div>
+<div class="photo-copy"><span>影印 / 列印</span><strong>影印店</strong></div></a></div><p class="photo-disclaimer">同品牌或同類型門市的公開照片，非輔大現場實拍。</p></div></section><section class="slide" data-title="這些店家能用什麼付款？"><div class="inside"><h2>這些店家能用什麼付款？</h2>
+<div class="table-wrap"><table class="paymatrix"><thead><tr><th>店家</th><th>LINE Pay</th><th>街口</th><th>悠遊卡</th><th>信用卡</th><th>僅收現金</th></tr></thead><tbody>
+<tr><td>7-ELEVEN</td><td class="hit">✓</td><td class="unk">?</td><td class="hit">✓</td><td class="hit">✓</td><td class="nil">—</td></tr>
+<tr><td>摩斯漢堡</td><td class="hit">✓</td><td class="unk">?</td><td class="hit">✓</td><td class="hit">✓</td><td class="nil">—</td></tr>
+<tr><td>路易莎</td><td class="hit">✓</td><td class="unk">?</td><td class="unk">?</td><td class="hit">✓</td><td class="nil">—</td></tr>
+<tr><td>麥當勞</td><td class="hit">✓</td><td class="hit">✓</td><td class="hit">✓</td><td class="hit">✓</td><td class="nil">—</td></tr>
+<tr><td>神威影印</td><td class="unk">?</td><td class="unk">?</td><td class="unk">?</td><td class="unk">?</td><td class="unk">?</td></tr>
+</tbody></table></div>
+<div class="matrix-note">「？」為公開資訊未確認；支付方式仍以實際門市公告為準。</div>
+</div></section><section class="slide" data-title="100 元的生意，手續費多少？"><div class="inside"><h2>100 元的生意，手續費多少？</h2>
+<div class="fee-grid">
+<div class="fee-card"><div class="fee-label">現金</div><div class="fee-amount"><span class="countup" data-goal="0">0</span><small>元</small></div><div class="fee-track"><i class="fee-fill" data-fill="0%"></i></div><p>無平台交易手續費</p></div>
+<div class="fee-card active"><div class="fee-label">LINE Pay</div><div class="fee-amount"><span class="countup" data-goal="3">0</span><small>元</small></div><div class="fee-track"><i class="fee-fill" data-fill="75%"></i></div><p>3%（未稅）</p></div>
+<div class="fee-card"><div class="fee-label">街口支付</div><div class="fee-amount"><span class="countup" data-decimal="1" data-goal="2.5">0</span><small>元</small></div><div class="fee-track"><i class="fee-fill" data-fill="62.5%"></i></div><p>2.5%（依方案）</p></div>
+</div>
+</div></section><section class="slide" data-title="收到了，不代表馬上入帳"><div class="inside"><h2>收到了，不代表馬上入帳</h2>
+<div class="settlement">
+<div class="stage"><div class="stage-number">01</div><b>交易完成</b><p>顧客付款成功</p></div><div class="join"><span></span></div>
+<div class="stage"><div class="stage-number">02</div><b>請款與對帳</b><p>平台處理交易</p></div><div class="join"><span></span></div>
+<div class="stage blue"><div class="stage-number">03</div><b>約 2 個工作天</b><p>請款後撥款</p></div>
+</div></div></section><section class="slide" data-title="店家怎麼看電子支付？"><div class="inside"><h2>店家怎麼看電子支付？</h2>
+<div class="voice-layout"><div class="voice-primary">
+<div class="voice-cap">媒體採訪整理｜TVBS</div><div class="voice-name">林秋雲</div><div class="voice-desc">寧夏夜市潤餅店</div><p>報導提到：忙著製餐時，電子支付能省去找零、接觸現金的動作。</p>
+</div><div class="voice-points">
+<div><b>省空間</b><span>一張 QR Code 可以整合不同付款工具。</span></div>
+<div><b>省動作</b><span>顧客掃碼，店家不用一直找零。</span></div>
+<div><b>入帳要等</b><span>不同平台的撥款時間不太一樣。</span></div>
+</div></div></div></section><section class="slide" data-title="為什麼要送點數？"><div class="inside"><h2>為什麼要送點數？</h2>
+<div class="rewards">
+<div class="reward"><span>01</span><b>消費</b><p>完成付款</p></div><div class="reward-arrow">→</div>
+<div class="reward"><span>02</span><b>獲得回饋</b><p>點數、折價券</p></div><div class="reward-arrow">→</div>
+<div class="reward"><span>03</span><b>再次消費</b><p>回到同一個平台</p></div>
+</div>
+<div class="reward-takeaway">回饋越容易使用，回購的機會也越高。</div></div></section><section class="slide" data-title="Apple Pay 怎麼保護卡號？"><div class="inside"><h2>Apple Pay 怎麼保護卡號？</h2>
+<div class="token-visual">
+<div class="token-node" data-phase="0"><div class="node-picto phone-picto"><div class="n-phone"><i></i><b>•••• 9086</b></div></div><b>iPhone</b><span>裝置驗證</span></div>
+<div aria-hidden="true" class="token-connector"><div class="token-light"></div></div>
+<div class="token-node center-node" data-phase="1"><div class="node-picto token-picto"><div class="token-core">T</div></div><b>Token</b><span>裝置專屬代碼</span></div>
+<div aria-hidden="true" class="token-connector"><div class="token-light second"></div></div>
+<div class="token-node" data-phase="2"><div class="node-picto terminal-picto"><div class="n-terminal"><i>✓</i></div></div><b>刷卡機</b><span>代碼＋動態安全碼</span></div>
+</div>
+<div class="token-answer">商家不會收到真實卡號。</div>
+</div></section><section class="slide" data-title="為什麼小店還是習慣收現金？"><div class="inside"><h2>為什麼小店還是習慣收現金？</h2>
+<div class="cash-vs-digital">
+<div class="choice"><h3>行動支付</h3><div class="choice-big">付款方便</div><p>省去找零，也方便整合會員與優惠。</p></div>
+<div class="choice"><h3>現金</h3><div class="choice-big">成本直接</div><p>沒有平台交易手續費，當下就能使用。</p></div>
+</div>
+<div class="cash-sum">對小店來說，手續費與現金流很重要。</div></div></section><section class="slide" data-title="我們整理出的四個重點"><div class="inside"><h2>我們整理出的四個重點</h2>
+<div class="final-grid">
+<div class="final-card"><b>消費者</b><strong>更方便</strong><span>手機就能完成付款</span></div>
+<div class="final-card"><b>店家</b><strong>要算成本</strong><span>費率、設備與撥款速度</span></div>
+<div class="final-card"><b>平台</b><strong>建立黏著度</strong><span>點數、回饋與會員服務</span></div>
+<div class="final-card"><b>安全</b><strong>降低卡號暴露</strong><span>Token 與動態驗證</span></div>
+</div></div></section><section class="slide team-slide" data-title="第 10 組｜組員"><div class="inside"><h2>第 10 組　組員</h2><div class="team-grid"><div class="member"><strong>歐相宏</strong><span>415402130</span></div><div class="member"><strong>林志軒</strong><span>415402154</span></div><div class="member"><strong>陳亭瑋</strong><span>415402386</span></div><div class="member"><strong>潘宣羽</strong><span>415402439</span></div><div class="member"><strong>王紹恩</strong><span>415402491</span></div><div class="member"><strong>林宏勳</strong><span>415402556</span></div><div class="member"><strong>賴文宥</strong><span>415402568</span></div></div></div></section></div><div class="topprogress" id="topprogress"></div><nav class="chrome"><span id="pageCount">01 / 12</span><button aria-label="上一頁" id="prev">‹</button><button aria-label="下一頁" id="next">›</button><button aria-label="全螢幕" id="full">⛶</button></nav><script>const slides=[...document.querySelectorAll('.slide')];let index=0,touchStart=0;
+function updateBars(section){section.querySelectorAll('[data-fill]').forEach(el=>{el.style.width='0';void el.offsetWidth;requestAnimationFrame(()=>{el.style.width=el.dataset.fill})})}
+function counter(section){section.querySelectorAll('.countup').forEach(el=>{const goal=Number(el.dataset.goal);const dec=Number(el.dataset.decimal||0);const start=performance.now(),duration=1250;cancelAnimationFrame(el._af||0);el.textContent='0';function tick(t){const p=Math.min(1,(t-start)/duration),v=goal*(1-(1-p)**3);el.textContent=v.toFixed(dec);if(p<1)el._af=requestAnimationFrame(tick)}el._af=requestAnimationFrame(tick)})}
+function show(n){index=(n+slides.length)%slides.length;slides.forEach((el,i)=>el.classList.toggle('active',i===index));document.getElementById('pageCount').textContent=String(index+1).padStart(2,'0')+' / '+slides.length;document.getElementById('topprogress').style.width=((index+1)/slides.length*100)+'%';counter(slides[index]);updateBars(slides[index]);document.title=slides[index].dataset.title+'｜當手機變成錢包'}
+document.getElementById('prev').onclick=()=>show(index-1);document.getElementById('next').onclick=()=>show(index+1);document.getElementById('full').onclick=()=>document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen?.();
+document.addEventListener('keydown',e=>{if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();show(index+1)}if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();show(index-1)}if(e.key.toLowerCase()==='f')document.getElementById('full').click();if(e.key.toLowerCase()==='p')window.print()});
+document.addEventListener('touchstart',e=>touchStart=e.changedTouches[0].screenX,{passive:true});document.addEventListener('touchend',e=>{const dx=e.changedTouches[0].screenX-touchStart;if(Math.abs(dx)>50)show(index+(dx<0?1:-1))},{passive:true});
+// Print/export must use final numbers and final bar widths, never an animation's 0-state.
+window.addEventListener('beforeprint',()=>{document.querySelectorAll('.countup').forEach(el=>{el.textContent=Number(el.dataset.goal).toFixed(Number(el.dataset.decimal||0))});document.querySelectorAll('[data-fill]').forEach(el=>el.style.width=el.dataset.fill)});
+show(0);</script></body></html>
